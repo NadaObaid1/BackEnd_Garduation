@@ -24,11 +24,11 @@ export const SignIn = async(req, res, next)=>{
     const{email, password} = req.body;
     const user = await UserModel.findOne({email})
     if(!user){
-        return res.status(404).json({message: "data invaid"});
+        return res.status(404).json({message: "data invaid user"});
     }
     const match = bcrypt.compareSync(password, user.password)
     if(!match){
-        return res.status(404).json({message: "data invaid"});
+        return res.status(404).json({message: "data invaid password"});
     }
 
     const token = jwt.sign({id:user._id, role: user.role}, process.env.LOGINSINGURE, {expiresIn: '1h'})//عشان موضوع السيكورتي وما يصير في تعديل ع الداتا 
