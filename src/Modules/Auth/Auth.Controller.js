@@ -51,13 +51,17 @@ export const ConfirmEmail = async(req, res)=>{
 
 export const SendCode = async(req, res)=>{ 
     const {email} = req.body
+    const user = await UserModel.findOne({email});
+    if(!user){
+        return res.status(404).json({message:"not register account"});
+    }
     let code = customAlphabet('1234567890', 4)
     code = code()
-    const user = await UserModel.findOneAndUpdate({email}, {sendCode: code}, {new:true}); //من خلال  الايميل غيرلي الكود من نل للقيمة الجديدة وعدل البيانات
+    const User = await UserModel.findOneAndUpdate({email}, {sendCode: code}, {new:true}); //من خلال  الايميل غيرلي الكود من نل للقيمة الجديدة وعدل البيانات
     const html = `<h2>code is : ${code} </h2>`
     await sendEmail(email, `Resetpassword`, html);
     //return res.redirect(process.env.REDICTPAGE)
-    return res.status(200).json({message:"success", user});
+    return res.status(200).json({message:"success", User});
 }
 
 export const forgetPassword = async(req, res)=>{
@@ -76,5 +80,15 @@ export const forgetPassword = async(req, res)=>{
     user.password = await bcrypt.hash(password, parseInt(process.env.SALT_ROUND));
     user.sendCode=null;
     await user. save();
+    return res.status(200).json({message: "success"});       
+}
+
+export const PutingCode = async(req, res)=>{
+    const {code} = req.body;
+    if(user.sendCode != code) {
+        return res.status(400).json({message:"invalid code"});
+    }
+    user.sendCode=null;
+    await user.save();
     return res.status(200).json({message: "success"});       
 }

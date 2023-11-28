@@ -10,5 +10,6 @@ router.post("/signup", validation(SignUpSchema), asynHandler(controllerAuth.Sign
 router.post("/signin", validation(SignInSchema), asynHandler(controllerAuth.SignIn));
 router.get("/confirmEmail/:token", asynHandler(controllerAuth.ConfirmEmail));
 router.patch("/SendCode", asynHandler(controllerAuth.SendCode))
+router.patch("/PutingCode", asynHandler(controllerAuth.PutingCode))
 router.patch("/forgetPassword", asynHandler(controllerAuth.forgetPassword))
 export default router;
