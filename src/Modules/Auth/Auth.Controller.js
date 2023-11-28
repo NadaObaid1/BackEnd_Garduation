@@ -55,7 +55,7 @@ export const SendCode = async(req, res)=>{
     code = code()
     const User = await UserModel.findOneAndUpdate({email}, {sendCode: code}, {new:true}); //من خلال  الايميل غيرلي الكود من نل للقيمة الجديدة وعدل البيانات
     if(!User){
-        return res.status(200).json({message:"faild this user not found"});
+        return res.status(404).json({message:"faild this user not found"});
     }
     const html = `<h2>code is : ${code} </h2>`
     await sendEmail(email, `Resetpassword`, html);
