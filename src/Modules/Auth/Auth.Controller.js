@@ -51,13 +51,12 @@ export const ConfirmEmail = async(req, res)=>{
 
 export const SendCode = async(req, res)=>{ 
     const {email} = req.body
-    const user = await UserModel.findOne({email});
-    if(!user){
-        return res.status(404).json({message:"not register account"});
-    }
     let code = customAlphabet('1234567890', 4)
     code = code()
     const User = await UserModel.findOneAndUpdate({email}, {sendCode: code}, {new:true}); //من خلال  الايميل غيرلي الكود من نل للقيمة الجديدة وعدل البيانات
+    if(!User){
+        return res.status(200).json({message:"faild this user not found"});
+    }
     const html = `<h2>code is : ${code} </h2>`
     await sendEmail(email, `Resetpassword`, html);
     //return res.redirect(process.env.REDICTPAGE)
