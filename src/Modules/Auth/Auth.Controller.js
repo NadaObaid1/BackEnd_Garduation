@@ -24,7 +24,7 @@ export const SignIn = async(req, res, next)=>{
     const{email, password} = req.body;
     const user = await UserModel.findOne({email})
     if(!user){
-        return res.status(404).json({message: "data invaid user"});
+        return res.status(404).json({message: "data invaid email"});
     }
     const match = bcrypt.compareSync(password, user.password)
     if(!match){

@@ -7,7 +7,7 @@ import {SignUpSchema} from './Auth.Vaildation.js'
 const router = Router()
 
 router.post("/signup", validation(SignUpSchema), asynHandler(controllerAuth.SignUp));
-router.get("/signin", validation(SignInSchema), asynHandler(controllerAuth.SignIn));
+router.post("/signin", validation(SignInSchema), asynHandler(controllerAuth.SignIn));
 router.get("/confirmEmail/:token", asynHandler(controllerAuth.ConfirmEmail));
 router.patch("/SendCode", asynHandler(controllerAuth.SendCode))
 router.patch("/forgetPassword", asynHandler(controllerAuth.forgetPassword))
