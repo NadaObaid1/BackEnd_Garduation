@@ -64,10 +64,10 @@ export const SendCode = async(req, res)=>{
 }
 
 export const forgetPassword = async(req, res)=>{
-    const {email, password, code} = req.body;
-    const user = await UserModel.findOne({email});
-    if(!user){
-        return res.status(404).json({message:"not register account"});
+    const {email, code, password, confirmpassword} = req.body;
+    const user = await UserModel.findOne({email})
+     if(!user){
+        return res.status(404).json({message: "email already exists"})
     }
     if(user.sendCode != code) {
         return res.status(400).json({message:"invalid code"});
@@ -77,15 +77,8 @@ export const forgetPassword = async(req, res)=>{
         return res.status(409).json({message:"same password"});
     }
     user.password = await bcrypt.hash(password, parseInt(process.env.SALT_ROUND));
-    user.sendCode=null;
-    await user. save();
-    return res.status(200).json({message: "success"});       
-}
-
-export const PutingCode = async(req, res)=>{
-    const {code} = req.body;
-    if(user.sendCode != code) {
-        return res.status(400).json({message:"invalid code"});
+    if (password !== confirmpassword) {
+        return res.status(400).json({ message: "Passwords do not match" });
     }
     user.sendCode=null;
     await user.save();
