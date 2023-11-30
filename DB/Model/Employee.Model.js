@@ -5,15 +5,19 @@ const EmployeeSchema = new Schema({
         type: String,
         minlength: 4,
         maxlength: 20,
+        required: true
     },
     job: {
         type: String,
+        required: true
     },
     experienceYears: {
         type: Number,
+        required: true
     },
     image: {
         type: Object,
+        
     },
 },
 {
