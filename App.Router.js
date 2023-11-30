@@ -1,4 +1,5 @@
 import AuthRouter from './src/Modules/Auth/Auth.Router.js'
+import ServicesRouter from './src/Modules/Services/Services.Router.js'
 import connectDb from './DB/Connection.js'
 
 const initApp =(app, express)=>{
@@ -9,6 +10,7 @@ const initApp =(app, express)=>{
     })
 
     app.use("/auth", AuthRouter)
+    app.use("/services", ServicesRouter)
 
     app.get("*", (req, res) =>{
         return res.status(500).json({message:"page not found"})
