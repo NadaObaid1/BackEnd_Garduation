@@ -1,4 +1,4 @@
-import multer from "multer";
+import multer from 'multer'
 
 export const fileValidation = {
     image : ['image/png', 'image/jpeg', 'image/webp, image/jpg'],
