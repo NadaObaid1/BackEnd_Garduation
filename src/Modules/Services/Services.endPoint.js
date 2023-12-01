@@ -1,4 +1,3 @@
-//import { roles } from "../../MiddelWare/Auth.js"
 const roles = {
     Admin: 'Admin', User:'User'
  }
