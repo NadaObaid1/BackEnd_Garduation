@@ -1,6 +1,7 @@
 import AuthRouter from './src/Modules/Auth/Auth.Router.js'
 import ServicesRouter from './src/Modules/Services/Services.Router.js'
 import connectDb from './DB/Connection.js'
+import EmployeeRouter from './src/Modules/Employees/Employee.Router.js';
 
 const initApp =(app, express)=>{
     connectDb()
@@ -10,6 +11,8 @@ const initApp =(app, express)=>{
     })
 
     app.use("/auth", AuthRouter)
+    
+    app.use("/employees", EmployeeRouter)
     app.use("/services", ServicesRouter)
 
     app.get("*", (req, res) =>{
@@ -19,3 +22,4 @@ const initApp =(app, express)=>{
 
 }
 export default initApp 
+
