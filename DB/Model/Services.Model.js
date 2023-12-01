@@ -29,7 +29,13 @@ const ServicesSchema = new Schema({
     },
     image: {
         type:Object,
-        //required:true
+        required:true
+    },
+    subServices:{
+        type:String,
+        required: true,
+        default: 'Body',
+        enum: ['Body', 'Face']
     },
     status: {
         type:String,
