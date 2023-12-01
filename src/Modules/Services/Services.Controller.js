@@ -2,7 +2,7 @@ import ServicesModel from "../../../DB/Model/Services.Model.js";
 import cloudinary from '../../Services/Cloudinary.js'
 
 export const getServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false}).select('image name finalPrice')
+    const Services = await ServicesModel.find({isDeleted:false}).select('image name price finalPrice')
     //const Services = await ServicesModel.find({isDeleted:false})
     res.status(200).json({message:"success", Services})
 }
