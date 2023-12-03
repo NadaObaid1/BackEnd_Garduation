@@ -12,7 +12,6 @@ const initApp =(app, express)=>{
     })
 
     app.use("/auth", AuthRouter)
-    
     app.use("/employees", EmployeeRouter)
     app.use("/services", ServicesRouter)
     app.use("/salons", SalonRouter)

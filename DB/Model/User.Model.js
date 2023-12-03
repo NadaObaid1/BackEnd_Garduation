@@ -44,7 +44,11 @@ const UserSchema = new Schema({
     sendCode:{
         type: String,
         default: null
-    }
+    },
+    loginAttempts: {
+        type: Number,
+        default: 0 
+    },
 },
 { 
     timestamps : true

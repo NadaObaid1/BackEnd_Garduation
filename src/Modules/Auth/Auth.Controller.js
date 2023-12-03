@@ -4,6 +4,53 @@ import { customAlphabet } from 'nanoid'
 import { sendEmail } from "../../Services/Email.js"
 import UserModel from "../../../DB/Model/User.Model.js"
 
+const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Warning</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        .warning {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #333; 
+        }
+        h2 {
+            color: #f6110b; 
+        }
+        p {
+            color: #92201c; 
+        }
+    </style>
+</head>
+<body>
+<div class="warning">
+<div style="background-color: red; padding: 20px;"></div>
+<h2>Safety Warning</h2>
+<p>The limit of login attempts on your account has been exceeded.</p>
+<p>Please take the necessary measures to secure your account.</p>
+<p>Thank you for your understanding and concern for the security of your account.</p>
+<br>
+<br>
+</div>
+
+</body>
+</html>
+
+
+`;
+
 export const SignUp = async(req, res)=>{
         const{userName, email, phone, address, age, password, confirmpassword} = req.body;
         const User = await UserModel.findOne({email})
@@ -15,7 +62,7 @@ export const SignUp = async(req, res)=>{
             return res.status(400).json({ message: "Passwords do not match" });
         }
         const token = jwt.sign({email}, process.env.ConfirmEmailSecure)
-        await sendEmail(email, "confirm email", `<a href="${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}">Verfiy</a>`)
+        await sendEmail(email, "confirm email", `<a href="${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}">Verfiy your email !!</a>`)
         const createUser = await UserModel.create({userName, email, phone, address, age, confirmpassword: true, password:hashedpassword})
         return res.status(201).json({message: "success", user: createUser})
 }
@@ -28,8 +75,16 @@ export const SignIn = async(req, res, next)=>{
     }
     const match = bcrypt.compareSync(password, user.password)
     if(!match){
+        user.loginAttempts += 1;
+        await user.save();
+        if (user.loginAttempts >= 3) {
+            await sendEmail(email, `Safety Warning`, html);
+            return res.status(403).json({ message: 'The limit of login attempts has been exceeded' });
+        }
         return res.status(404).json({message: "data invaid password"});
     }
+    user.loginAttempts = 0;
+    await user.save();
 
     const token = jwt.sign({id:user._id, role: user.role}, process.env.LOGINSINGURE, {expiresIn: '1h'})//عشان موضوع السيكورتي وما يصير في تعديل ع الداتا 
     const refreshToken = jwt.sign({id:user._id, role: user.role}, process.env.LOGINSINGURE, {expiresIn:  60*60*24*30})
