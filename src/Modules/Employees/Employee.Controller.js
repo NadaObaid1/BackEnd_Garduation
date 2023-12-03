@@ -1,4 +1,3 @@
-// Employee.Controller.js
 import EmployeeModel from "../../../DB/Model/Employee.Model.js";
 import cloudinary from '../../Services/Cloudinary.js'
 
