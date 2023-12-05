@@ -6,12 +6,6 @@ export const getServices = async(req, res) => {
     //const Services = await ServicesModel.find({isDeleted:false})
     res.status(200).json({message:"success", Services})
 }
-
-export const getDetailsServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false}).select('image name price time description')
-    res.status(200).json({message:"success", Services})
-}
-
 export const CreateServices = async(req, res) => {
     try{
     const {name, description, price, discount, time} = req.body;
