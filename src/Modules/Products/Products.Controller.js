@@ -19,7 +19,7 @@ export const CreateProducts = async(req, res)=>{
         folder : `${process.env.APP_NAME}/products`
     })
     const product = await productModel.create({name, description, price, discount, stock,
-          number_sellers, rate, status, image:{secure_url, public_id}, subProducts});
+          number_sellers, rate, status, image:{secure_url, public_id}, subProducts, finalPrice: req.body.finalPrice});
     if(!product){
         return res.status(400).json({message:"error while creating product"});
     }
