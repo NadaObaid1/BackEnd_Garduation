@@ -4,7 +4,7 @@ import fileUpload, {fileValidation} from "../../Services/multer.js"
 
 const router = Router()
 
-router.get('/', ProductController.getProducts)
+router.get('/getProducts', ProductController.getProducts)
 router.post("/CreateProducts", fileUpload(fileValidation.image).single('image'), ProductController.CreateProducts);
 router.delete('/hardDelete/:id', ProductController.hardDelete)
 
