@@ -7,7 +7,6 @@ export const getServices = async(req, res) => {
     res.status(200).json({message:"success", Services})
 }
 export const CreateServices = async(req, res) => {
-    try{
     const {name, description, price, discount, time} = req.body;
     let { subServices } = req.body;
     let { status } = req.body;
@@ -24,10 +23,7 @@ export const CreateServices = async(req, res) => {
         subServices, status, time, image: {secure_url, public_id}})
     return res.status(201).json({message: "success", service})
 
-    }catch (error) {
-    return res.status(500).json({ message: "An error occurred while creating the services", error});
     }
-}
 
 export const updateServices = async(req, res)=>{
     try{

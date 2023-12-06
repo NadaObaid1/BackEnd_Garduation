@@ -3,6 +3,7 @@ import ServicesRouter from './src/Modules/Services/Services.Router.js'
 import connectDb from './DB/Connection.js'
 import EmployeeRouter from './src/Modules/Employees/Employee.Router.js';
 import SalonRouter from './src/Modules/Salons/Salon.Router.js';
+import ProductRouter from './src/Modules/Products/Products.Router.js'
 
 const initApp =(app, express)=>{
     connectDb()
@@ -14,6 +15,7 @@ const initApp =(app, express)=>{
     app.use("/auth", AuthRouter)
     app.use("/employees", EmployeeRouter)
     app.use("/services", ServicesRouter)
+    app.use("/products", ProductRouter)
     app.use("/salons", SalonRouter)
 
     app.get("*", (req, res) =>{
