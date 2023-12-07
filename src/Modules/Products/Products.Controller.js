@@ -2,7 +2,17 @@ import productModel from '../../../DB/Model/Product.model.js'
 import cloudinary from '../../Services/Cloudinary.js'
 
 export const getProducts = async (req, res) => {
-    const products = await productModel.find({isDeleted:false}).select('name description finalPrice discount stock number_sellers rate status image')
+    const products = await productModel.find({isDeleted:false, status: 'Active'}).select('name description finalPrice discount stock number_sellers rate status image')
+    res.status(200).json({message:"success", products})
+}
+
+export const getBodyProducts = async (req, res) => {
+    const products = await productModel.find({isDeleted:false, subProducts: 'Body', status: 'Active'}).select('name description finalPrice discount stock number_sellers rate status image')
+    res.status(200).json({message:"success", products})
+}
+
+export const getFaceProducts = async (req, res) => {
+    const products = await productModel.find({isDeleted:false, subProducts: 'Face', status: 'Active'}).select('name description finalPrice discount stock number_sellers rate status image')
     res.status(200).json({message:"success", products})
 }
 
