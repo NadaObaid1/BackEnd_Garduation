@@ -2,17 +2,18 @@ import ServicesModel from "../../../DB/Model/Services.Model.js";
 import cloudinary from '../../Services/Cloudinary.js'
 
 export const getServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false, status: 'Active',}).select('image name price time description finalPrice')
+    const Services = await ServicesModel.find({isDeleted:false, status: 'Active',})
     //const Services = await ServicesModel.find({isDeleted:false})
     res.status(200).json({message:"success", Services})
 }
 export const getBodyServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Body'}).select('image name price time description finalPrice')
+    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Body'})
     res.status(200).json({message:"success", Services})
 }
 
+
 export const getFaceServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Face'}).select('image name price time description finalPrice')
+    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Face'})
     res.status(200).json({message:"success", Services})
 }
 
@@ -65,13 +66,13 @@ export const updateServices = async(req, res)=>{
         Services.subServices = req.body.subServices
     }
     if(req.file){
-        const {secure_url, public_id} = await cloudinary.uploader.upload(req.file.path,{
+        const {secure_url, public_id , } = await cloudinary.uploader.upload(req.file.path,{
             folder: `${process.env.APP_NAME}/services`
         })
         if (Services.image && Services.image.public_id) {
             await cloudinary.uploader.destroy(Services.image.public_id);
         }
-        Services.image = { secure_url, public_id };
+        Services.image = { secure_url, public_id ,  };
     }
     await Services.save();
     return res.status(200).json({message: "success", Services});
