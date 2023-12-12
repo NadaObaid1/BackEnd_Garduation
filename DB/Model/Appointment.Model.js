@@ -8,7 +8,7 @@ const AppointmentSchema = new Schema(
     },
     salon_id: {
       type: String,
-      // required: true,
+      required: true,
     },
     user_name: {
       type: String,
