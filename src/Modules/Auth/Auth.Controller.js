@@ -88,7 +88,7 @@ export const SignIn = async(req, res, next)=>{
 
     const token = jwt.sign({id:user._id, role: user.role}, process.env.LOGINSINGURE, {expiresIn: '1h'})//عشان موضوع السيكورتي وما يصير في تعديل ع الداتا 
     const refreshToken = jwt.sign({id:user._id, role: user.role}, process.env.LOGINSINGURE, {expiresIn:  60*60*24*30})
-    return res.status(200).json({message: "success", token, refreshToken});
+    return res.status(200).json({message: "success", token, refreshToken  , id:user._id,role: user.role,name: user.userName});
 }
 
 export const ConfirmEmail = async(req, res)=>{
