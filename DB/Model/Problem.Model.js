@@ -6,7 +6,7 @@ const ProblemSchema = new Schema({
         required: true,
         type: String,
 
-    },
+    }, 
 
     userID: {
         type: Types.ObjectId,
