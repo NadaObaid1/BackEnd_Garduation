@@ -48,7 +48,7 @@ export const getAllPosts = async (req, res) => {
   export const updatePost = async (req, res) => {
     try {
       const updatedPost = await PostModel.findByIdAndUpdate(
-        req.params.id,
+        req.params.id, 
         {textPost: req.body.textPost},
         { new: true }
       );

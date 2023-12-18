@@ -9,6 +9,8 @@ import EmployeeRouter from './src/Modules/Employees/Employee.Router.js';
 import SalonRouter from './src/Modules/Salons/Salon.Router.js';
 import AppointmentRouter from './src/Modules/Appointments/Appointment.Router.js';
 import ProductRouter from './src/Modules/Products/Products.Router.js'
+import ProfileRouter from './src/Modules/Profile/Profile.Router.js'
+
 
 const initApp =(app, express)=>{
     connectDb()
@@ -26,6 +28,7 @@ const initApp =(app, express)=>{
     app.use("/products", ProductRouter)
     app.use("/salons", SalonRouter)
     app.use("/appointments", AppointmentRouter)
+    app.use("/profiles", ProfileRouter)
 
     app.get("*", (req, res) =>{
         return res.status(500).json({message:"page not found"})
