@@ -12,6 +12,7 @@ router.get('/post/:id', postController.getPostById);
 router.put('/post/:id', postController.updatePost);
 router.delete('/post/:id', postController.deletePost);
 router.post('/post/:id/like', postController.increaseLikesController);
+router.post('/posts/:id/unlike', postController.decreaseLikesController);
 
 
 export default router; 
