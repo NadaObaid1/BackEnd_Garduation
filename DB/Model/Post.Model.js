@@ -17,6 +17,11 @@ const PostSchema = new Schema({
         type: Object,
         
     },
+    
+    likes: {
+        type: Number,
+        default: 0,
+    },
 
 
 

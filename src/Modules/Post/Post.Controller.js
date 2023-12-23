@@ -1,5 +1,7 @@
 import PostModel from "../../../DB/Model/Post.Model.js"
 import cloudinary from '../../Services/Cloudinary.js'
+//import { increaseLikes } from './increaseLikes'; // Assuming both files are in the same directory
+
 
 
 
@@ -77,3 +79,38 @@ export const getAllPosts = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   }; 
+
+
+  // increaseLikes.js
+
+  const increaseLikes = async (postId) => {
+    try {
+        const post = await PostModel.findById(postId);
+
+        if (!post) {
+            throw new Error('Post not found');
+        }
+
+        post.likes += 1;
+        await post.save();
+
+        return post.likes;
+    } catch (error) {
+        throw new Error('Failed to increase likes');
+    }
+};
+
+export { increaseLikes };
+
+
+export const increaseLikesController = async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+      const updatedLikes = await increaseLikes(postId);
+      res.json({ likes: updatedLikes });
+  } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ error: 'Failed to increase likes' });
+  }
+};

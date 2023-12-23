@@ -4,7 +4,6 @@ export const updateProfile = async (req, res) => {
   try {
     const { userName, age, phone, address } = req.body;
 
-    // Validate the incoming data here if needed
 
     const updatedProfile = await UserModel.findByIdAndUpdate(
       req.params.id,
