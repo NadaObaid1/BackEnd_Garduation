@@ -8,4 +8,4 @@ const router = Router()
 router.put('/profile/:id', profileController.updateProfile);
 
 
-export default router; 
+export default router;  
