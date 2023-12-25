@@ -5,7 +5,7 @@ import fileUpload, {fileValidation} from "../../Services/multer.js"
 //import { auth } from '../../Middlware/Auth.js'
 // auth(["Admin"]),
 
-const router = Router()
+const router = Router() 
 
 router.post("/job", fileUpload(fileValidation.image).single('image'), jobController.createJob);
 router.get("/job", jobController.getAllJobs);
