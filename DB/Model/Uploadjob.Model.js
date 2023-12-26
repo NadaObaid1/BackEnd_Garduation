@@ -2,22 +2,33 @@ import mongoose, {Schema, model, Types} from "mongoose";
 
 const UploadjobSchema = new Schema({
    
-    jobName:{
+
+    user_id: {
+        type: String,
+        required: true,
+      },
+
+      salon_id: {
+        type: String,
+        required: true,
+      },
+
+      user_name: {
+        type: String,
+        required: true,
+      },
+
+     jobName:{
         required: true,
         type: String,
 
     },
  
 
-    cvFile: {
+     image: {
         type: Object,
         
     },
-
-    userID: {
-        type: Types.ObjectId,
-        ref: "User"
-    } 
 
 
 },

@@ -7,7 +7,7 @@ export const uploadJob = async (req, res) => {
           folder : `${process.env.APP_NAME}/uploadjobs`
       })
       
-      const newJob = await UploadjobModel.create({...req.body, cvFile: {secure_url, public_id}})
+      const newJob = await UploadjobModel.create({...req.body, image: {secure_url, public_id}})
       
       res.status(201).json(newJob);
       
