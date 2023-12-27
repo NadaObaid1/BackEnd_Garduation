@@ -17,4 +17,4 @@ function fileUpload(CustomValidation = []){
     return upload
 }
 
-export default fileUpload
+export default fileUpload 

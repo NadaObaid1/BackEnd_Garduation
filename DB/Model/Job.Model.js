@@ -12,12 +12,17 @@ const JobSchema = new Schema({
         required: true,
         type: String,
 
+    }, 
+
+    image: {
+        type: Object,
+        
     },
 
     userID: {
         type: Types.ObjectId,
-        ref: "User"
-    }
+        ref: "Employee"
+    } 
 
 
 },
@@ -25,5 +30,5 @@ const JobSchema = new Schema({
     timestamps : true
 })
 
-const JobModel = model('Job', JobSchema)
+const JobModel = model('Job', JobSchema, 'jobs')
 export default JobModel

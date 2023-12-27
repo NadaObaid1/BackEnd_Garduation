@@ -6,7 +6,7 @@ export const createAppointment = async (req, res) => {
     const newAppointment = await AppointmentModel.create(req.body);
     res.status(201).json(newAppointment);
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error });
   }
 };
 

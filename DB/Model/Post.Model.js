@@ -10,8 +10,19 @@ const PostSchema = new Schema({
 
     userID: {
         type: Types.ObjectId,
-        ref: "User"
-    }
+        ref: "Employee"
+    },
+
+    image: {
+        type: Object,
+        
+    },
+    
+    likes: {
+        type: Number,
+        default: 0,
+    },
+
 
 
 },
@@ -19,5 +30,5 @@ const PostSchema = new Schema({
     timestamps : true
 })
 
-const PostModel = model('Post', PostSchema)
+const PostModel = model('Post', PostSchema, 'posts')
 export default PostModel

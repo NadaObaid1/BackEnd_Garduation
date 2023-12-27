@@ -1,13 +1,18 @@
 import {Router} from 'express'
 import * as postController from "./Post.Controller.js"
-import {asynHandler} from '../../Services/errorHandler.js'
-import { PostSchema } from './Post.Validation.js'
-import { auth } from '../../Middlware/Auth.js'
+import fileUpload, {fileValidation} from "../../Services/multer.js"
+//import { auth } from '../../Middlware/Auth.js'
 
 const router = Router()
 
 
-router.post("/post", auth(["Admin"]),  asynHandler(postController.createPost));
-router.get("/post", auth(["Admin", "User"]), asynHandler(postController.getPost));
+router.post("/post", fileUpload(fileValidation.image).single('image'), postController.createPost);
+router.get("/post", postController.getAllPosts);
+router.get('/post/:id', postController.getPostById);
+router.put('/post/:id', postController.updatePost);
+router.delete('/post/:id', postController.deletePost);
+router.post('/post/:id/like', postController.increaseLikesController);
+router.post('/post/:id/unlike', postController.decreaseLikesController);
 
-export default router;
+
+export default router; 
