@@ -3,7 +3,6 @@ import ProblemRouter from './src/Modules/Problem/Problem.Router.js'
 import PostRouter from './src/Modules/Post/Post.Router.js'
 import JobRouter from './src/Modules/Job/Job.Router.js'
 import UploadjobRouter from './src/Modules/Uploadjob/Uploadjob.Router.js'
-
 import ServicesRouter from './src/Modules/Services/Services.Router.js'
 import connectDb from './DB/Connection.js'
 import EmployeeRouter from './src/Modules/Employees/Employee.Router.js';
@@ -11,6 +10,7 @@ import SalonRouter from './src/Modules/Salons/Salon.Router.js';
 import AppointmentRouter from './src/Modules/Appointments/Appointment.Router.js';
 import ProductRouter from './src/Modules/Products/Products.Router.js'
 import ProfileRouter from './src/Modules/Profile/Profile.Router.js'
+import CartRouter from './src/Modules/Cart/Cart.Router.js'
 
 
 const initApp =(app, express)=>{
@@ -31,6 +31,7 @@ const initApp =(app, express)=>{
     app.use("/appointments", AppointmentRouter)
     app.use("/profiles", ProfileRouter)
     app.use("/uploadjobs", UploadjobRouter)
+    app.use("/cart", CartRouter)
 
     app.get("*", (req, res) =>{
         return res.status(500).json({message:"page not found"})
