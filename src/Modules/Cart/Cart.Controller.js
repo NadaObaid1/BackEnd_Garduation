@@ -1,6 +1,7 @@
 import cartModel from '../../../DB/Model/Cart.Model.js'
 
 export const CreateCart = async(req,res)=>{
+    try{
     const {productId, quantity} = req.body;
     const cart = await cartModel.findOne({userId:req.user._id});
     if(!cart){
@@ -22,6 +23,10 @@ export const CreateCart = async(req,res)=>{
     }
     await cart.save()
     return res.status(201).json({message:"success", cart});
+}catch (error) {
+    console.error('Error adding product to cart:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+}
 }
 
 export const removeItem = async(req, res)=>{
