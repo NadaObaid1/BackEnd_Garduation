@@ -49,7 +49,20 @@ export const clearCart = async(req, res)=>{
 }
 
 
-export const getCart = async(req,res)=>{
-    const cart = await cartModel.findOne({userId:req.user._id}).select('name finalPrice image');// ون لانه فش الا سلة وحدة لكل يوزر وبترجعها مباشرة مش جوا اري
+/*export const getCart = async(req,res)=>{
+    const cart = await cartModel.findOne({userId:req.user._id});// ون لانه فش الا سلة وحدة لكل يوزر وبترجعها مباشرة مش جوا اري
     return res.status(200).json({message: "success", cart: cart});
+}*/
+
+export const getCart = async (req, res) => {
+    try {
+        const cart = await cartModel.findOne({ userId: req.user._id })
+            .select('userId products.productId products.quantity products.image');
+
+        return res.status(200).json({ message: "success", cart: cart });
+    } catch (error) {
+        console.error('Error fetching cart:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
 }
+
