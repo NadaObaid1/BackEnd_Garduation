@@ -50,6 +50,6 @@ export const clearCart = async(req, res)=>{
 
 
 export const getCart = async(req,res)=>{
-    const cart = await cartModel.findOne({userId:req.user._id});// ون لانه فش الا سلة وحدة لكل يوزر وبترجعها مباشرة مش جوا اري
+    const cart = await cartModel.findOne({userId:req.user._id}).select('name finalPrice image');// ون لانه فش الا سلة وحدة لكل يوزر وبترجعها مباشرة مش جوا اري
     return res.status(200).json({message: "success", cart: cart});
 }
