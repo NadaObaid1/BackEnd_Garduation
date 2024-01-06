@@ -78,7 +78,10 @@ export const increaseQuantity = async (req, res) => {
     try {
       const { productId } = req.body;
       console.log('Received productId:', productId);
-      const userCart = await cartModel.findOne({ userId: req.user._id });
+      const userCart = await cartModel.findOne({ userId: req.user._id }).populate({
+        path: 'products.productId',
+        select: 'stock',
+    });
       console.log('ProductIds in cart:', userCart.products.map(product => product.productId));
       const productIndex = userCart.products.findIndex(product => product.productId.equals(productId));
       console.log('Product details:', productIndex);
@@ -111,7 +114,7 @@ export const increaseQuantity = async (req, res) => {
       const userCart = await cartModel.findOne({ userId: req.user._id }).populate({
         path: 'products.productId',
         select: 'stock',
-    });;
+    });
       console.log('ProductIds in cart:', userCart.products.map(product => product.productId));
       const productIndex = userCart.products.findIndex(product => product.productId.equals(productId));
       console.log('Product details:', productIndex);
