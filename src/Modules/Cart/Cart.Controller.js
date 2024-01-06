@@ -11,7 +11,7 @@ export const CreateCart = async (req, res) => {
                 products: [{ productId, quantity }]
             });
 
-            return res.status(201).json({ message: "success", newCart });
+            //return res.status(201).json({ message: "success", newCart });
         }
 
         let matchedProduct = false;
