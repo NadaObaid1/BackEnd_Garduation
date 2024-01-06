@@ -74,3 +74,64 @@ export const getCart = async (req, res) => {
 };
 
 
+export const increaseQuantity = async (req, res) => {
+    try {
+      const { productId } = req.body;
+      console.log('Received productId:', productId);
+      const userCart = await cartModel.findOne({ userId: req.user._id });
+      console.log('ProductIds in cart:', userCart.products.map(product => product.productId));
+      const productIndex = userCart.products.findIndex(product => product.productId.equals(productId));
+      console.log('Product details:', productIndex);
+  
+      if (productIndex !== -1) {
+        console.log('Product details:', userCart.products[productIndex]);
+  
+        if (userCart.products[productIndex].quantity !== undefined) {
+          userCart.products[productIndex].quantity += 1;
+  
+          await userCart.save();
+  
+          return res.status(200).json({ message: "success", cart: userCart });
+        } else {
+          return res.status(500).json({ error: "Product in the cart has invalid structure" });
+        }
+      } else {
+        return res.status(404).json({ error: "Product not found in the cart" });
+      }
+    } catch (error) {
+      console.error('Error increasing quantity:', error.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+
+  export const decreaseQuantity = async (req, res) => {
+    try {
+      const { productId } = req.body;
+      console.log('Received productId:', productId);
+      const userCart = await cartModel.findOne({ userId: req.user._id });
+      console.log('ProductIds in cart:', userCart.products.map(product => product.productId));
+      const productIndex = userCart.products.findIndex(product => product.productId.equals(productId));
+      console.log('Product details:', productIndex);
+  
+      if (productIndex !== -1) {
+        console.log('Product details:', userCart.products[productIndex]);
+  
+        if (userCart.products[productIndex].quantity > 0) {
+          userCart.products[productIndex].quantity -= 1;
+  
+          await userCart.save();
+  
+          return res.status(200).json({ message: "success", cart: userCart });
+        } else {
+          return res.status(400).json({ error: "Product quantity cannot be negative" });
+        }
+      } else {
+        return res.status(404).json({ error: "Product not found in the cart" });
+      }
+    } catch (error) {
+      console.error('Error decreasing quantity:', error.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  };
+  
+  
