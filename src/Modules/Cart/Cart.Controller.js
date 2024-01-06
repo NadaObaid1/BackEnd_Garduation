@@ -5,13 +5,13 @@ export const CreateCart = async (req, res) => {
         const { productId, quantity } = req.body;
         const cart = await cartModel.findOne({ userId: req.user._id }).populate({
             path: 'products.productId',
-            select: 'name image finalPrice',
+            select: 'name image finalPrice stock',
         });
 
         if (!cart) {
             const newCart = await cartModel.create({
                 userId: req.user._id,
-                products: [{ productId, quantity }]
+                products: [{ productId, quantity}]
             })
 
             console.log("New Cart created:", newCart);
@@ -21,7 +21,7 @@ export const CreateCart = async (req, res) => {
         let matchedProduct = false;
 
         for (let i = 0; i < cart.products.length; i++) {
-            if (cart.products[i].productId._id.equals(productId)) { // Use equals to compare ObjectId
+            if (cart.products[i].productId._id.equals(productId)) {
                 cart.products[i].quantity = quantity;
                 matchedProduct = true;
                 break;
@@ -64,7 +64,7 @@ export const clearCart = async(req, res)=>{
 
 export const getCart = async (req, res) => {
     try {
-        const cart = await cartModel.findOne({ userId: req.user._id }).populate('products.productId', 'name image finalPrice');
+        const cart = await cartModel.findOne({ userId: req.user._id }).populate('products.productId', 'name image finalPrice stock');
 
         return res.status(200).json({ message: "success", cart });
     } catch (error) {
