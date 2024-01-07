@@ -4,5 +4,6 @@ export const endPoint = {
     create : [roles.User],
     delete: [roles.User],
     clear: [roles.User],
-    get: [roles.User]
+    get: [roles.User],
+    put: [roles.User]
 }
