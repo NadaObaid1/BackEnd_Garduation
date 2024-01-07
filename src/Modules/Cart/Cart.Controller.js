@@ -27,13 +27,10 @@ export const CreateCart = async (req, res) => {
               matchedProduct = true;
               break;
           }}
-      if (!matchedProduct) {
-          if (product.stock >= quantity) {
-              cart.products.push({ productId, quantity });
-          } else {
-              return res.status(400).json({ message: "The product is not available" });
-          }
-      }
+          if(!matchedProduct) {
+            await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1});
+            cart.products.push({productId,quantity});
+        }
       await cart.save();
       console.log("Cart updated:", cart);
 
