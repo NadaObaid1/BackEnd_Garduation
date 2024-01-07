@@ -91,7 +91,7 @@ export const increaseQuantity = async (req, res) => {
       if (userCart.products[productIndex].quantity !== undefined) {
         const updatedQuantity = userCart.products[productIndex].quantity + 1;
         if (userCart.products[productIndex].productId.stock === 0) {
-          return res.status(400).json({ error: "Product quantity cannot be decreased, stock is already zero" });
+          return res.status(401).json({ error: "Product quantity cannot be increased, stock is already zero" });
         }
 
         userCart.products[productIndex].quantity = updatedQuantity;
@@ -139,7 +139,7 @@ export const increaseQuantity = async (req, res) => {
 
       if (userCart.products[productIndex].quantity > 0) {
         if (userCart.products[productIndex].productId.stock === 0) {
-          return res.status(400).json({ error: "Product quantity cannot be decreased, stock is already zero" });
+          return res.status(401).json({ error: "Product quantity cannot be decreased, stock is already zero" });
         }
         userCart.products[productIndex].quantity -= 1;
 
