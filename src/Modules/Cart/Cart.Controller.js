@@ -15,7 +15,7 @@ export const CreateCart = async (req, res) => {
               userId: req.user._id,
               products: [{ productId, quantity }]
           });
-          await productModel.findByIdAndUpdate(productId, { stock: product.stock - quantity });
+          await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1});
           return res.status(201).json({ message: "success", cart: newCart });
       }
 
@@ -23,7 +23,6 @@ export const CreateCart = async (req, res) => {
 
       for (let i = 0; i < cart.products.length; i++) {
           if (cart.products[i].productId._id.equals(productId)) {
-              await productModel.findByIdAndUpdate(productId, { stock: product.stock - (quantity - cart.products[i].quantity) });
               cart.products[i].quantity = quantity;
               matchedProduct = true;
               break;
@@ -31,7 +30,6 @@ export const CreateCart = async (req, res) => {
       if (!matchedProduct) {
           if (product.stock >= quantity) {
               cart.products.push({ productId, quantity });
-              await productModel.findByIdAndUpdate(productId, { stock: product.stock - quantity });
           } else {
               return res.status(400).json({ message: "The product is not available" });
           }
