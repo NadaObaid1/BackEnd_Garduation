@@ -3,48 +3,58 @@ import productModel from '../../../DB/Model/Product.model.js';
 
 export const CreateCart = async (req, res) => {
   try {
-      const { productId, quantity } = req.body;
-      const cart = await cartModel.findOne({ userId: req.user._id }).populate({
-          path: 'products.productId',
-          select: 'name image finalPrice stock',
+    const { productId, quantity } = req.body;
+    const cart = await cartModel
+      .findOne({ userId: req.user._id })
+      .populate({
+        path: 'products.productId',
+        select: 'name image finalPrice stock',
       });
-      const product = await productModel.findById(productId);
+    const product = await productModel.findById(productId);
 
-      if (!cart) {
-          const newCart = await cartModel.create({
-              userId: req.user._id,
-              products: [{ productId, quantity }]
-          });
-          await productModel.findByIdAndUpdate(productId, { stock: product.stock - quantity });
-          return res.status(201).json({ message: "success", cart: newCart });
+    if (!cart) {
+      const newCart = await cartModel.create({
+        userId: req.user._id,
+        products: [{ productId, quantity }],
+      });
+      await productModel.findByIdAndUpdate(productId, { stock: product.stock - quantity });
+      return res.status(201).json({ message: "success", cart: newCart });
+    }
+
+    let matchedProduct = false;
+
+    for (let i = 0; i < cart.products.length; i++) {
+      if (cart.products[i].productId._id.equals(productId)) {
+        await productModel.findByIdAndUpdate(productId, {
+          stock: product.stock - (quantity - cart.products[i].quantity),
+        });
+        cart.products[i].quantity = quantity;
+        matchedProduct = true;
+        break;
       }
+    }
 
-      let matchedProduct = false;
-
-      for (let i = 0; i < cart.products.length; i++) {
-          if (cart.products[i].productId._id.equals(productId)) {
-              await productModel.findByIdAndUpdate(productId, { stock: product.stock - (quantity - cart.products[i].quantity) });
-              cart.products[i].quantity = quantity;
-              matchedProduct = true;
-              break;
-          }}
-      if (!matchedProduct) {
-          if (product.stock >= quantity) {
-              cart.products.push({ productId, quantity });
-              await productModel.findByIdAndUpdate(productId, { stock: product.stock - quantity });
-          } else {
-              return res.status(400).json({ message: "The product is not available" });
-          }
+    if (!matchedProduct) {
+      if (product.stock >= quantity) {
+        cart.products.push({ productId, quantity });
+        await productModel.findByIdAndUpdate(productId, { stock: product.stock - quantity });
+      } else {
+        return res.status(400).json({ message: "The product is not available" });
       }
-      await cart.save();
-      console.log("Cart updated:", cart);
+    }
 
-      return res.status(201).json({ message: "success", cart });
+    // Save changes to cart and wait for it to complete
+    await cart.save();
+    console.log("Cart updated:", cart);
+
+    // Return the response after the changes have been saved
+    return res.status(201).json({ message: "success", cart });
   } catch (error) {
-      console.error('Error adding product to cart:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    console.error('Error adding product to cart:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 
 
