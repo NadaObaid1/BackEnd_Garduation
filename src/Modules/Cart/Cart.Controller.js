@@ -90,7 +90,7 @@ export const increaseQuantity = async (req, res) => {
 
       if (userCart.products[productIndex].quantity !== undefined) {
         const updatedQuantity = userCart.products[productIndex].quantity + 1;
-        if (userCart.products[productIndex].productId.stock === 0) {
+        if (userCart.products[productIndex].productId.stock === 0 ) {
           return res.status(401).json({ error: "Product quantity cannot be increased, stock is already zero" });
         }
 
@@ -136,25 +136,25 @@ export const increaseQuantity = async (req, res) => {
 
     if (productIndex !== -1) {
       console.log('Product details:', userCart.products[productIndex]);
-
-      if (userCart.products[productIndex].quantity > 0) {
+    
+      if (userCart.products[productIndex].quantity > 0) { 
         if (userCart.products[productIndex].productId.stock === 0) {
           return res.status(401).json({ error: "Product quantity cannot be decreased, stock is already zero" });
         }
         userCart.products[productIndex].quantity -= 1;
-
+    
         const product = await productModel.findById(productId);
         if (product) {
           product.stock += 1;
           await product.save();
           await userCart.save();
-
+    
           return res.status(200).json({ message: "success", cart: userCart });
         } else {
           return res.status(404).json({ error: "Product not found" });
         }
       } else {
-        return res.status(400).json({ error: "Product quantity cannot be negative" });
+        return res.status(400).json({ error: "Product quantity cannot be zero or negative" }); // Adjusted error message
       }
     } else {
       return res.status(404).json({ error: "Product not found in the cart" });
