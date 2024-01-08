@@ -11,5 +11,6 @@ router.patch('/clearCart',auth(endPoint.clear), CartController.clearCart);
 router.get('/getCart',auth(endPoint.get), CartController.getCart);
 router.put('/increaseQuantity',auth(endPoint.put), CartController.increaseQuantity);
 router.put('/decreaseQuantity',auth(endPoint.put), CartController.decreaseQuantity);
+router.get('/calculateTotalPrice',auth(endPoint.get), CartController.calculateTotalPrice);
 
 export default router

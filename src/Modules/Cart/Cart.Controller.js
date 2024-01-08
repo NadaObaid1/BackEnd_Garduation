@@ -41,8 +41,6 @@ export const CreateCart = async (req, res) => {
   }
 };
 
-
-
 export const removeItem = async(req, res)=>{
     const {productId} = req.body;
     await cartModel.updateOne({userId:req.user._id},{
@@ -63,7 +61,7 @@ export const clearCart = async(req, res)=>{
 }
 
 
-/*export const getCart = async (req, res) => {
+export const getCart = async (req, res) => {
     try {
         const cart = await cartModel.findOne({ userId: req.user._id }).populate('products.productId', 'name image finalPrice stock');
 
@@ -72,11 +70,11 @@ export const clearCart = async(req, res)=>{
         console.error('Error fetching cart:', error);
         return res.status(500).json({ message: 'Internal server error' });
     }
-};*/
+};
 
-export const getCart = async (req, res) => {
+export const calculateTotalPrice = async (req, res) => {
   try {
-      const cart = await cartModel.findOne({ userId: req.user._id }).populate('products.productId', 'name image finalPrice stock');
+      const cart = await cartModel.findOne({ userId: req.user._id }).populate('products.productId', 'finalPrice');
 
       if (!cart) {
           return res.status(404).json({ message: "Cart not found" });
@@ -89,16 +87,13 @@ export const getCart = async (req, res) => {
               totalPrice
           };
       });
-
       const totalCartPrice = cartWithTotalPrice.reduce((total, item) => total + item.totalPrice, 0);
-
       return res.status(200).json({ message: "success", cart: cartWithTotalPrice, totalCartPrice });
   } catch (error) {
       console.error('Error fetching cart:', error);
       return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 
 export const increaseQuantity = async (req, res) => {
