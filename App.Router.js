@@ -11,6 +11,7 @@ import AppointmentRouter from './src/Modules/Appointments/Appointment.Router.js'
 import ProductRouter from './src/Modules/Products/Products.Router.js'
 import ProfileRouter from './src/Modules/Profile/Profile.Router.js'
 import CartRouter from './src/Modules/Cart/Cart.Router.js'
+import FavoriteRouter from './src/Modules/Favorite/Favorite.Router.js'
 
 
 const initApp =(app, express)=>{
@@ -32,6 +33,7 @@ const initApp =(app, express)=>{
     app.use("/profiles", ProfileRouter)
     app.use("/uploadjobs", UploadjobRouter)
     app.use("/cart", CartRouter)
+    app.use("/favorite", FavoriteRouter)
 
     app.get("*", (req, res) =>{
         return res.status(500).json({message:"page not found"})
