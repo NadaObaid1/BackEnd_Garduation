@@ -8,24 +8,24 @@ const UploadjobSchema = new Schema({
         required: true,
       },
 
-      salon_id: {
+    salon_id: {
+        type: String,
+        required: true, 
+      },
+
+    user_name: {
         type: String,
         required: true,
       },
 
-      user_name: {
-        type: String,
-        required: true,
-      },
-
-     jobName:{
+    jobName:{
         required: true,
         type: String,
 
     },
  
 
-     image: {
+    image: {
         type: Object,
         
     },
