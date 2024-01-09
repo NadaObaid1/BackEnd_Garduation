@@ -43,3 +43,17 @@ export const hardDelete = async(req, res)=>{
     }
     return res.status(200).json({message: "success"});
 }
+
+export const softDelete = async(req, res)=>{ // ما بحذف حذف حقيقي 
+    try{
+        const {id} = req.params;
+        const product = await productModel.findOneAndUpdate({_id:id, isDeleted:false}, {isDeleted: true}, 
+        {new: true}); //رجعي المعلومات الجديدة
+        if(!product){ 
+          return res.status(400).json({message: "can't delete this product"});
+        }
+          return res.status(200).json({message: "success"});
+    }catch(err){
+          return res.status(200).json({err: "error where soft Delete"});
+    }
+}

@@ -42,12 +42,12 @@ export const updateServices = async(req, res)=>{
     if(!Services) {
     return res.status(404).json({message: 'Services not found'});
     }
-    if(req.body.name) {
+    /*if(req.body.name) {
     if(await ServicesModel.findOne({name:req.body.name}).select('name')){ // روح ع الداتابيس شوفهااذا موجود رجعلي بس اسمه
     return res.status(409).json({message: `Services ${req.body.name} already exists`})
-    }
+    }*/
     Services.name = req.body.name;
-    }
+   /* } */
     if(req.body.price || req.body.discount) {// حطيتها ب If  لانه يمكن مش باعتها فبفحص بالاول
         Services.price = req.body.price; //يعني عدلي ع هاد الاوبجكت
         Services.discount = req.body.discount; 
