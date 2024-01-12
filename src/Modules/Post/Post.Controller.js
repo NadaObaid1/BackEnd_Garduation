@@ -127,37 +127,6 @@ export const increaseLikesController = async (req, res) => {
 };
 
 
-// posts.controller.js
 
-export const decreaseLikesController = async (req, res) => {
-  const postId = req.params.id;
 
-  try {
-      const updatedLikes = await decreaseLikes(postId);
-      res.json({ likes: updatedLikes });
-  } catch (error) {
-      console.error(error.message);
-      res.status(500).json({ error: 'Failed to decrease likes' });
-  }
-};
 
-// decreaseLikes.js
-
-const decreaseLikes = async (postId) => {
-    try {
-        const post = await PostModel.findById(postId);
-
-        if (!post) {
-            throw new Error('Post not found');
-        }
-
-        post.likes -= 1; // Decrement the likes
-        await post.save();
-
-        return post.likes;
-    } catch (error) {
-        throw new Error('Failed to decrease likes');
-    }
-};
-
-export { decreaseLikes };
