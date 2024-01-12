@@ -95,6 +95,7 @@ export const getAllPosts = async (req, res) => {
 
         return post.likes.length;
     } catch (error) {
+      console.log(error.message)
         throw new Error('Failed to increase likes');
     }
 };
