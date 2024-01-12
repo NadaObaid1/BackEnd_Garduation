@@ -85,9 +85,20 @@ export const getAllPosts = async (req, res) => {
 
   const increaseLikes = async (postId, userId) => {
     try {
-        const post = await PostModel.findOneAndUpdate({_id: postId}, 
+      const post1 = await PostModel.findById(postId)
+      let post;
+      if (post1.likes.includes(userId)){
+         post = await PostModel.findOneAndUpdate({_id: postId}, 
+          {$pull: {likes: userId}}, 
+          {new: true});
+
+      } else {
+         post = await PostModel.findOneAndUpdate({_id: postId}, 
           {$addToSet: {likes: userId}}, 
           {new: true});
+
+      }
+        
 
         if (!post) {
             throw new Error('Post not found');
