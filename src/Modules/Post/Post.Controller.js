@@ -83,18 +83,17 @@ export const getAllPosts = async (req, res) => {
 
   // increaseLikes.js
 
-  const increaseLikes = async (postId) => {
+  const increaseLikes = async (postId, userId) => {
     try {
-        const post = await PostModel.findById(postId);
+        const post = await PostModel.findOneAndUpdate({_id: postId}, 
+          {$addToSet: {likes: userId}}, 
+          {new: true});
 
         if (!post) {
             throw new Error('Post not found');
         }
 
-        post.likes += 1;
-        await post.save();
-
-        return post.likes;
+        return post.likes.length;
     } catch (error) {
         throw new Error('Failed to increase likes');
     }
@@ -105,9 +104,9 @@ export { increaseLikes };
 
 export const increaseLikesController = async (req, res) => {
   const postId = req.params.id;
-
+  const userId = req.params.Id;
   try {
-      const updatedLikes = await increaseLikes(postId);
+      const updatedLikes = await increaseLikes(postId, userId);
       res.json({ likes: updatedLikes });
   } catch (error) {
       console.error(error.message);
