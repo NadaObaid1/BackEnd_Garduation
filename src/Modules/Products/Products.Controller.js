@@ -3,6 +3,23 @@ import SalonModel from '../../../DB/Model/Salon.Model.js'
 import cloudinary from '../../Services/Cloudinary.js'
 
 export const getProducts = async (req, res) => {
+    const salonId = req.params.id;
+    try {
+        const salon = await SalonModel.findById(salonId);
+        if (!salon) {
+            return res.status(404).json({ message: "Salon not found" });
+        }
+        const products = await find({
+            isDeleted:false,
+            status: 'Active',
+            SalonId: salonId,
+        }).select('name description finalPrice discount stock number_sellers rate status image');
+
+        res.status(200).json({ message: "Success", products });
+    } catch (error) {
+        console.error("Error fetching body products:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
     const products = await productModel.find({isDeleted:false, status: 'Active'}).select('name description finalPrice discount stock number_sellers rate status image')
     res.status(200).json({message:"success", products})
 }
