@@ -52,12 +52,9 @@ const productschema = new Schema({
         type: Boolean,
         default: false
     },
-   /* categoryId:{type: Types.ObjectId, ref: 'Category', required: true},*/
+    SalonId:{type: Types.ObjectId, ref: 'Salon', required: true},
     createdBy:{type: Types.ObjectId, ref: 'User'},
     updatedBy: {type: Types.ObjectId, ref: 'User'},
-    },
-    {
-        timestamps: true
-    })
+    })    
     const productModel = mongoose.models.Product || model('Product', productschema)
     export default productModel;
