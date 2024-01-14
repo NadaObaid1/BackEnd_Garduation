@@ -25,7 +25,7 @@ const SalonSchema = new Schema({
     SalonSchema.virtual('Product', { //زي كنه حقل وهمي
     localField:'_id', //مفتاح اساسي
     foreignField: 'ProductId', // المفتاح الاجنبي
-    ref: 'Product' //جبتها من اسم المودل الي موجودة بال category model
+    ref: 'Product' //جبتها من اسم المودل الي موجودة بال Product model
 });
 
 const SalonModel = model('Salon', SalonSchema, 'salons');
