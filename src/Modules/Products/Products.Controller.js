@@ -20,8 +20,6 @@ export const getProducts = async (req, res) => {
         console.error("Error fetching body products:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-    const products = await productModel.find({isDeleted:false, status: 'Active'}).select('name description finalPrice discount stock number_sellers rate status image')
-    res.status(200).json({message:"success", products})
 }
 
 export const getBodyProducts = async (req, res) => {
