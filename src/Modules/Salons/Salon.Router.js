@@ -13,7 +13,4 @@ router.get('/salon/:id', salonController.getSalonById);
 router.put('/salon/:id', salonController.updateSalon);
 router.delete('/salon/:id', salonController.deleteSalon);
 
-
-router.get('/', salonController.getSalon);
-
 export default router;

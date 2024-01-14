@@ -42,11 +42,6 @@ export const getSalonById = async (req, res) => {
   }
 };
 
-export const getSalon = async(req, res)=>{
-  const Salon = await SalonModel.find().populate('Product')
-  return res.status(200).json({message: "success", Salon})
-}
-
 export const updateSalon = async (req, res) => {
   try {
     const updatedSalon = await SalonModel.findByIdAndUpdate(
