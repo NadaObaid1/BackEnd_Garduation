@@ -16,7 +16,7 @@ export const uploadJob = async (req, res) => {
       res.status(500).json({ error});
      
   
-    }
+    } 
   };
 
 

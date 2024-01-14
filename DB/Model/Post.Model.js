@@ -1,3 +1,4 @@
+
 import mongoose, {Schema, model, Types} from "mongoose";
 
 const PostSchema = new Schema({
@@ -12,17 +13,13 @@ const PostSchema = new Schema({
         type: Types.ObjectId,
         ref: "Employee"
     },
-
+ 
     image: {
         type: Object,
         
     },
     
-    likes: {
-        type: Number,
-        default: 0,
-    },
-
+    likes:  [{type: Types.ObjectId, ref: "User"}],
 
 
 },
