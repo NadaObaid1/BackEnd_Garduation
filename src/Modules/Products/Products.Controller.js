@@ -9,7 +9,7 @@ export const getProducts = async (req, res) => {
         if (!salon) {
             return res.status(404).json({ message: "Salon not found" });
         }
-        const products = await find({
+        const products = await productModel.find({
             isDeleted:false,
             status: 'Active',
             SalonId: salonId,
