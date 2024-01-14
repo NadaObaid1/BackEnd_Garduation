@@ -115,10 +115,10 @@ export { increaseLikes };
 
 
 export const increaseLikesController = async (req, res) => {
-  const postId = req.params.id;
+  const postId = req.params.id; 
   const userId = req.params.Id;
   try {
-      const updatedLikes = await increaseLikes(postId, userId);
+      const updatedLikes = await increaseLikes(postId, userId); 
       res.json({ likes: updatedLikes });
   } catch (error) {
       console.error(error.message);

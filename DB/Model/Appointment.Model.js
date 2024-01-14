@@ -6,7 +6,7 @@ const AppointmentSchema = new Schema(
       type: String,
       required: true,
     },
-    salon_id: {
+    salon_id: { 
       type: String,
       required: true,
     },

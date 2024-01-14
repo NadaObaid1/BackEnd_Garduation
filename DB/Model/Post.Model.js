@@ -9,10 +9,11 @@ const PostSchema = new Schema({
 
     },
 
-    userID: {
+    salonID: {
         type: Types.ObjectId,
-        ref: "Employee"
+        ref: "Salon"
     },
+
  
     image: {
         type: Object,
