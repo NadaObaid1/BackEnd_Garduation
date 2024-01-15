@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, model, Types } from "mongoose";
 
 const SalonSchema = new Schema({
     name: {
@@ -16,6 +16,7 @@ const SalonSchema = new Schema({
         type: Object,
         
     },
+
 },
 {
     timestamps: true,
@@ -35,7 +36,7 @@ const SalonSchema = new Schema({
     ref: 'Post' 
 })
 
-SalonSchema.virtual('Job', { 
+   SalonSchema.virtual('Job', { 
     localField:'_id', 
     foreignField: 'JobId', 
     ref: 'Job' 
