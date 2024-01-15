@@ -25,7 +25,7 @@ export const getAllSalons = async (req, res) => {
     const salons = await SalonModel.find();
     res.status(200).json(salons);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message }); 
   }
 };
 
