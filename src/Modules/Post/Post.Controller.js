@@ -1,6 +1,7 @@
 import PostModel from "../../../DB/Model/Post.Model.js"
+import SalonModel from "../../../DB/Model/Salon.Model.js";
 import cloudinary from '../../Services/Cloudinary.js'
-//import { increaseLikes } from './increaseLikes'; // Assuming both files are in the same directory
+
 
 
 
@@ -25,9 +26,15 @@ export const createPost = async (req, res) => {
 
 
 
-export const getAllPosts = async (req, res) => {
+export const getAllPosts = async (req, res) => { 
+  const salonId = req.params.id;
     try {
-      const posts = await PostModel.find();
+      const salon = await SalonModel.findById(salonId);
+        if (!salon) {
+            return res.status(404).json({ message: "Salon not found" });
+        }
+
+      const posts = await PostModel.find({SalonId: salonId});
       res.status(200).json(posts);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -36,11 +43,11 @@ export const getAllPosts = async (req, res) => {
 
   export const getPostById = async (req, res) => {
     try {
-      const salon = await SalonModel.findById(req.params.id);
-      if (salon) {
-        res.status(200).json(salon);
+      const post = await PostModel.findById(req.params.id);
+      if (post) {
+        res.status(200).json(post);
       } else {
-        res.status(404).json({ message: 'Salon not found' });
+        res.status(404).json({ message: 'Post not found' });
       }
     } catch (error) {
       res.status(500).json({ error: error.message });

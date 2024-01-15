@@ -20,13 +20,22 @@ const SalonSchema = new Schema({
 {
     timestamps: true,
     toJSON: { virtuals: true }, 
-    toObject: { virtuals: true }
+    toObject: { virtuals: true } 
 })
+
     SalonSchema.virtual('Product', { //زي كنه حقل وهمي
     localField:'_id', //مفتاح اساسي
     foreignField: 'ProductId', // المفتاح الاجنبي
     ref: 'Product' //جبتها من اسم المودل الي موجودة بال Product model
-});
+})
+
+    SalonSchema.virtual('Post', { 
+    localField:'_id', 
+    foreignField: 'PostId', 
+    ref: 'Post' 
+})
+
+;
 
 const SalonModel = model('Salon', SalonSchema, 'salons');
 

@@ -11,4 +11,4 @@ router.post("/CreateProducts", fileUpload(fileValidation.image).single('image'),
 router.delete('/hardDelete/:id', ProductController.hardDelete)
 router.delete('/softDelete/:id', ProductController.softDelete)
 
-export default router
+export default router 

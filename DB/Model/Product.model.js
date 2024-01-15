@@ -56,5 +56,5 @@ const productschema = new Schema({
     createdBy:{type: Types.ObjectId, ref: 'User'},
     updatedBy: {type: Types.ObjectId, ref: 'User'},
     })    
-    const productModel = mongoose.models.Product || model('Product', productschema)
+    const productModel = mongoose.models.Product || model('Product', productschema) 
     export default productModel;
