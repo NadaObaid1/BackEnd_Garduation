@@ -6,7 +6,7 @@ import cloudinary from '../../Services/Cloudinary.js'
 
 
 
-export const createPost = async (req, res) => {
+export const createPost = async (req, res) => { 
     try {
       const {secure_url, public_id} = await cloudinary.uploader.upload(req.file.path, {
           folder : `${process.env.APP_NAME}/posts`

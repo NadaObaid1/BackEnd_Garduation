@@ -35,6 +35,12 @@ const SalonSchema = new Schema({
     ref: 'Post' 
 })
 
+SalonSchema.virtual('Job', { 
+    localField:'_id', 
+    foreignField: 'JobId', 
+    ref: 'Job' 
+})
+
 ;
 
 const SalonModel = model('Salon', SalonSchema, 'salons');

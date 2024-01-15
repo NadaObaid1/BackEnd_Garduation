@@ -22,7 +22,11 @@ const JobSchema = new Schema({
     userID: {
         type: Types.ObjectId,
         ref: "Employee"
-    } 
+    },
+    
+    SalonId:{type: Types.ObjectId, ref: 'Job', required: true},
+    createdBy:{type: Types.ObjectId, ref: 'User'},
+    updatedBy: {type: Types.ObjectId, ref: 'User'},
 
 
 },

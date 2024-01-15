@@ -25,8 +25,14 @@ export const createJob = async (req, res) => {
 
 
 export const getAllJobs = async (req, res) => {
+  const salonId = req.params.id;
     try {
-      const jobs = await JobModel.find();
+      const salon = await SalonModel.findById(salonId);
+      if (!salon) {
+          return res.status(404).json({ message: "Salon not found" });
+      }
+
+      const jobs = await JobModel.find({SalonId: salonId});
       res.status(200).json(jobs);
     } catch (error) {
       res.status(500).json({ error: error.message });
