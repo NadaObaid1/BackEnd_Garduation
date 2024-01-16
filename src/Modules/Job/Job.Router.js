@@ -5,7 +5,7 @@ import fileUpload, {fileValidation} from "../../Services/multer.js"
 
 
 const router = Router({mergeParams: true}); 
-
+ 
 
 router.post("/job", fileUpload(fileValidation.image).single('image'), jobController.createJob);
 router.get("/job", jobController.getAllJobs);

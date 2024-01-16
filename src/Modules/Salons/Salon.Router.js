@@ -3,6 +3,8 @@ import * as salonController from "./Salon.Controller.js";
 import ProductRouter from "../Products/Products.Router.js"
 import PostRouter from "../Post/Post.Router.js"
 import JobRouter from "../Job/Job.Router.js"
+import UploadjobRouter from "../Uploadjob/Uploadjob.Router.js"
+
 import {auth, roles} from "../../Middlware/Auth.js"
 
 import fileUpload, {fileValidation} from "../../Services/multer.js"
@@ -13,6 +15,7 @@ const router = Router();
 router.use("/:id/Product", ProductRouter)
 router.use("/:id/Post", PostRouter)
 router.use("/:id/Job", JobRouter)
+router.use("/:id/Uploadjob", UploadjobRouter)
 
 router.post('/salon',fileUpload(fileValidation.image).single('image'), salonController.createSalon);
 router.get('/salon', auth([roles.Admin, roles.User]) ,salonController.getAllSalons);

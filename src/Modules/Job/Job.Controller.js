@@ -5,7 +5,7 @@ import cloudinary from '../../Services/Cloudinary.js'
 
 
 export const createJob = async (req, res) => { 
-  try {
+  try { 
     const {secure_url, public_id} = await cloudinary.uploader.upload(req.file.path, {
         folder : `${process.env.APP_NAME}/jobs`
     })

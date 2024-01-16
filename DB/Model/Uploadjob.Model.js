@@ -8,10 +8,6 @@ const UploadjobSchema = new Schema({
         required: true,
       },
 
-    salon_id: {
-        type: String,
-        required: true, 
-      },
 
     user_name: {
         type: String,
@@ -20,7 +16,7 @@ const UploadjobSchema = new Schema({
 
     jobName:{
         required: true,
-        type: String,
+        type: String, 
 
     },
  
@@ -29,6 +25,10 @@ const UploadjobSchema = new Schema({
         type: Object,
         
     },
+
+    SalonId:{type: Types.ObjectId, ref: 'Salon', required: true},
+    createdBy:{type: Types.ObjectId, ref: 'User'},
+    updatedBy: {type: Types.ObjectId, ref: 'User'},
 
 
 },
