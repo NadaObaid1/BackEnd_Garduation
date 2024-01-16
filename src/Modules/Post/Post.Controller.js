@@ -6,23 +6,55 @@ import cloudinary from '../../Services/Cloudinary.js'
 
 
 
-export const createPost = async (req, res) => { 
-    try {
-      const {secure_url, public_id} = await cloudinary.uploader.upload(req.file.path, {
-          folder : `${process.env.APP_NAME}/posts`
-      })
+// export const createPost = async (req, res) => { 
+//     try {
+//       const {secure_url, public_id} = await cloudinary.uploader.upload(req.file.path, {
+//           folder : `${process.env.APP_NAME}/posts`
+//       })
       
-      const newPost = await PostModel.create({...req.body, image: {secure_url, public_id}})
+//       const newPost = await PostModel.create({...req.body, image: {secure_url, public_id}})
       
-      res.status(201).json(newPost);
+//       res.status(201).json(newPost);
       
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error});
+//     } catch (error) {
+//       console.log(error);
+//       res.status(500).json({ error});
      
   
+//     }
+//   };
+
+export const createPost = async (req, res) => {
+  try {
+    let imageInfo = {}; // Initialize an empty object for image information
+
+    // Check if an image is included in the request
+    if (req.file) {
+      // Upload the image to Cloudinary
+      const { secure_url, public_id } = await cloudinary.uploader.upload(
+        req.file.path,
+        {
+          folder: `${process.env.APP_NAME}/posts`,
+        }
+      );
+
+      // Store image information
+      imageInfo = { secure_url, public_id };
     }
-  };
+
+    // Create a new post, including text and optionally image information
+    const newPost = await PostModel.create({
+      ...req.body,
+      ...(Object.keys(imageInfo).length > 0 && { image: imageInfo }),
+    });
+
+    res.status(201).json(newPost);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
+};
+
 
 
 

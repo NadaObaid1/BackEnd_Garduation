@@ -23,7 +23,7 @@ export const uploadJob = async (req, res) => {
  
   export const getAllJobs = async (req, res) => {
     const salonId = req.params.id;
-    try {
+    try { 
       const salon = await SalonModel.findById(salonId);
       if (!salon) {
           return res.status(404).json({ message: "Salon not found" });
