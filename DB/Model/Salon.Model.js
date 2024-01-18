@@ -9,7 +9,7 @@ const SalonSchema = new Schema(
       required: true,
     },
     branches: {
-        type: [String], // Change the type to an array of strings
+        type: [String],
         required: true,
       },
     image: {
