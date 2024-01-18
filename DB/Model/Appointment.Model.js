@@ -14,6 +14,10 @@ const AppointmentSchema = new Schema(
       type: String,
       required: true,
     },
+    branch: {
+      type: String,
+      required: true,
+    },
     appointment_date: {
       type: String,
       required: true,
