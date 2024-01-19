@@ -5,7 +5,7 @@ const UserSchema = new Schema({
         type: String,
         min: 4,
         max: 20,
-        required: true //[true, "Name is required"]
+        required: true
     },
      email : {
         type: String,
@@ -53,6 +53,8 @@ const UserSchema = new Schema({
 { 
     timestamps : true 
 })
+
+
 
 const UserModel = mongoose.model.User || model('User', UserSchema)
 export default UserModel

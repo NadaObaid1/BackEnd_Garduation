@@ -7,13 +7,10 @@ const ProblemSchema = new Schema({
         type: String,
 
     }, 
-
-    userID: {
-        type: Types.ObjectId,
-        ref: "User"
-    }
-
-
+    user_id: {
+        type: String, 
+        required: true,
+      },
 },
 { 
     timestamps : true
