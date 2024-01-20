@@ -8,8 +8,10 @@ export const createSalon = async (req, res) => {
         folder : `${process.env.APP_NAME}/salons`
     })
     
-    const newSalon = await SalonModel.create({...req.body, image: {secure_url, public_id}})
-    
+    const newSalon = await SalonModel.create({
+      ...req.body,
+      image: { secure_url, public_id }
+    });    
     res.status(201).json(newSalon);
     
   } catch (error) {
@@ -28,6 +30,23 @@ export const getAllSalons = async (req, res) => {
     res.status(500).json({ error: error.message }); 
   }
 };
+
+export const getBranchesOfSalon = async (req, res) => {
+  try {
+    const salon = await SalonModel.findById(req.params.id);
+
+    if (salon) {
+      const branches = salon.branches;
+      res.status(200).json(branches);
+    } else {
+      res.status(404).json({ error: 'Salon not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 
 export const getSalonById = async (req, res) => {
   try {

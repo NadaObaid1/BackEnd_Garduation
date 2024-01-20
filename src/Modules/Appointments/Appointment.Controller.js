@@ -1,4 +1,5 @@
 import AppointmentModel from "../../../DB/Model/Appointment.Model.js";
+import UserModel from "../../../DB/Model/User.Model.js";
 
 
 export const createAppointment = async (req, res) => {
@@ -14,6 +15,21 @@ export const getAllAppointments = async (req, res) => {
   try {
     const appointments = await AppointmentModel.find();
     res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+export const getUserById = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id);
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

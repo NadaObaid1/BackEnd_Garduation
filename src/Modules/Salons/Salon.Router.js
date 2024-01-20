@@ -19,6 +19,7 @@ router.use("/:id/Uploadjob", UploadjobRouter)
 
 router.post('/salon',fileUpload(fileValidation.image).single('image'), salonController.createSalon);
 router.get('/salon', auth([roles.Admin, roles.User]) ,salonController.getAllSalons);
+router.get('/salon/:id/branches', salonController.getBranchesOfSalon);
 router.get('/salon/:id', salonController.getSalonById);
 router.put('/salon/:id', salonController.updateSalon);
 router.delete('/salon/:id', salonController.deleteSalon);
