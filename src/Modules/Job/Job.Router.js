@@ -6,7 +6,7 @@ import {auth, roles} from "../../Middlware/Auth.js"
 
 
 
-const router = Router({mergeParams: true});  
+const router = Router({mergeParams: true});   
   
 
 router.post("/job", auth(roles.Admin),fileUpload(fileValidation.image).single('image'), jobController.createJob);
