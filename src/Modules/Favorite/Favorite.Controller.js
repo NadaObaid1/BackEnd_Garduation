@@ -35,7 +35,7 @@ export const AddFavorite = async (req, res) => {
 
 export const removeItem = async(req, res)=>{
     const {productId} = req.body;
-    await FavoriteModel.updateOne({userId:req.user._id},{
+    await FavoriteModel.updateOne({userId:req.user._id},{  
     $pull: {
         products : {
             productId
