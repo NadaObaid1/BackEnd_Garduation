@@ -4,6 +4,7 @@ import ProductRouter from "../Products/Products.Router.js"
 import PostRouter from "../Post/Post.Router.js"
 import JobRouter from "../Job/Job.Router.js"
 import UploadjobRouter from "../Uploadjob/Uploadjob.Router.js"
+import EmployeeRouter from "../Employees/Employee.Router.js"
 
 import {auth, roles} from "../../Middlware/Auth.js"
 
@@ -16,6 +17,7 @@ router.use("/:id/Product", ProductRouter)
 router.use("/:id/Post", PostRouter)
 router.use("/:id/Job", JobRouter)
 router.use("/:id/Uploadjob", UploadjobRouter)
+router.use("/:id/Employee", EmployeeRouter)
 
 router.post('/salon',fileUpload(fileValidation.image).single('image'), salonController.createSalon);
 router.get('/salon', auth([roles.Admin, roles.User]) ,salonController.getAllSalons);

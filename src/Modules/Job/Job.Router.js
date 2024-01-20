@@ -11,6 +11,6 @@ router.post("/job", fileUpload(fileValidation.image).single('image'), jobControl
 router.get("/job", jobController.getAllJobs);
 router.get('/job/:id', jobController.getJobById);
 router.put('/job/:id', jobController.updateJob);
-router.delete('/job/:id', jobController.deleteJob);
+router.delete('/job/:id', jobController.deleteJob); 
 
 export default router; 

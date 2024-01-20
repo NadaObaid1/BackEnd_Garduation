@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, model, Types } from "mongoose";
 
 const EmployeeSchema = new Schema({
     name: {
@@ -19,6 +19,10 @@ const EmployeeSchema = new Schema({
         type: Object,
         
     },
+
+    SalonId:{type: Types.ObjectId, ref: 'Salon', required: true},
+    createdBy:{type: Types.ObjectId, ref: 'User'},
+    updatedBy: {type: Types.ObjectId, ref: 'User'},
 },
 {
     timestamps: true

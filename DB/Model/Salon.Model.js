@@ -48,6 +48,12 @@ SalonSchema.virtual("Uploadjob", {
   ref: "Uploadjob",
 });
 
+SalonSchema.virtual("Employee", {
+  localField: "_id",
+  foreignField: "EmployeeId",
+  ref: "Employee",
+});
+
 const SalonModel = model("Salon", SalonSchema, "salons");
 
 export default SalonModel;
