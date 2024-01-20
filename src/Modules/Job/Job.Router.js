@@ -9,7 +9,7 @@ import {auth, roles} from "../../Middlware/Auth.js"
 const router = Router({mergeParams: true});  
   
 
-router.post("/job", fileUpload(fileValidation.image).single('image'), jobController.createJob);
+router.post("/job", auth(roles.Admin),fileUpload(fileValidation.image).single('image'), jobController.createJob);
 router.get("/job", auth([roles.Admin, roles.User]),jobController.getAllJobs);
 router.get('/job/:id', auth([roles.Admin, roles.User]),jobController.getJobById);
 router.put('/job/:id', auth(roles.Admin),jobController.updateJob);
