@@ -1,16 +1,18 @@
 import {Router} from 'express'
 import * as jobController from "./Job.Controller.js"
 import fileUpload, {fileValidation} from "../../Services/multer.js"
+import {auth, roles} from "../../Middlware/Auth.js"
 
 
 
-const router = Router({mergeParams: true}); 
- 
 
-router.post("/job", fileUpload(fileValidation.image).single('image'), jobController.createJob);
-router.get("/job", jobController.getAllJobs);
-router.get('/job/:id', jobController.getJobById);
-router.put('/job/:id', jobController.updateJob);
-router.delete('/job/:id', jobController.deleteJob); 
+const router = Router({mergeParams: true});  
+  
+
+router.post("/job", auth([roles.Admin, roles.User]),fileUpload(fileValidation.image).single('image'), jobController.createJob);
+router.get("/job", auth([roles.Admin, roles.User]),jobController.getAllJobs);
+router.get('/job/:id', auth([roles.Admin, roles.User]),jobController.getJobById);
+router.put('/job/:id', auth([roles.Admin, roles.User]),jobController.updateJob);
+router.delete('/job/:id', auth([roles.Admin, roles.User]),jobController.deleteJob); 
 
 export default router; 
