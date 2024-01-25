@@ -21,7 +21,7 @@ const UploadjobSchema = new Schema({
     },
  
 
-    image: {
+    cvFile: { 
         type: Object,
         
     },
