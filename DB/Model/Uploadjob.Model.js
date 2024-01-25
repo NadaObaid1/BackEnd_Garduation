@@ -3,10 +3,7 @@ import mongoose, {Schema, model, Types} from "mongoose";
 const UploadjobSchema = new Schema({
    
 
-    user_id: {
-        type: String,
-        required: true,
-      },
+
 
 
     user_name: {
