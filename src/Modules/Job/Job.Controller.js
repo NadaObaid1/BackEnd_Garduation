@@ -12,7 +12,7 @@ export const createJob = async (req, res) => {
     
     const newJob = await JobModel.create({...req.body, image: {secure_url, public_id}})
     
-    res.status(201).json(newJob); 
+    res.status(201).json(newJob);  
     
   } catch (error) {
     console.log(error);

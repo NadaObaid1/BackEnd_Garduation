@@ -3,7 +3,8 @@ import * as appointmentController from "./Appointment.Controller.js";
 
 
 
-const router = Router();
+const router = Router({mergeParams: true});      
+
 
 router.post('/appointment',appointmentController.createAppointment);
 router.get('/appointment', appointmentController.getAllAppointments);

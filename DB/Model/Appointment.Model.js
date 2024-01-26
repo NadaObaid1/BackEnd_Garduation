@@ -22,7 +22,7 @@ const AppointmentSchema = new Schema(
       type: String,
       required: true,
     },
-    appointment_time: {
+    appointment_time: { 
       type: String,
       required: true,
     },
@@ -33,6 +33,9 @@ const AppointmentSchema = new Schema(
       type: String,
       required: true,
     },
+    SalonId:{type: Types.ObjectId, ref: 'Salon', required: true},
+    createdBy:{type: Types.ObjectId, ref: 'User'},
+    updatedBy: {type: Types.ObjectId, ref: 'User'},
   },
   {timestamps: true},
 );
