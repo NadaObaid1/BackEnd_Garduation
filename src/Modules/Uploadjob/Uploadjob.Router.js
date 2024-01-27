@@ -7,7 +7,7 @@ import {auth, roles} from "../../Middlware/Auth.js"
 const router = Router({mergeParams: true}); 
  
 
-router.post("/uploadjob", auth([roles.Admin, roles.User]),fileUpload(fileValidation.pdf).single('image'), uploadjobController.uploadJob);
+router.post("/uploadjob", auth([roles.Admin, roles.User]),fileUpload(fileValidation.pdf).single('cvFile'), uploadjobController.uploadJob);
 router.get("/uploadjob", auth(roles.Admin),uploadjobController.getAllJobs);
 
 export default router; 
