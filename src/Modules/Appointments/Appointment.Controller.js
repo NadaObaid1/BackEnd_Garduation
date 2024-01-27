@@ -22,7 +22,7 @@ export const getAllAppointments = async (req, res) => {
     const appointments = await AppointmentModel.find({SalonId: salonId});
     res.status(200).json(appointments);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message }); 
   }
 };
 

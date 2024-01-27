@@ -8,7 +8,7 @@ export const AddFavorite = async (req, res) => {
       let favorite = await FavoriteModel.findOne({ userId: req.user._id });
   
       if (!favorite) {
-        favorite = await FavoriteModel.create({
+        favorite = await FavoriteModel.create({ 
           userId: req.user._id,
           products: [{ productId }],
         });
