@@ -50,9 +50,11 @@ export const getBranchesOfSalon = async (req, res) => {
 
 export const getSalonById = async (req, res) => {
   try {
-    const salon = await SalonModel.findById(req.params);
+    const salon = await SalonModel.findById(req.params.id);
     if (salon) {
-      res.status(200).json(salon);
+      const R = new Array(salon);
+      res.status(200).json(R);
+      
     } else {
       res.status(404).json({ message: 'Salon not found' });
     }
