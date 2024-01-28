@@ -58,7 +58,7 @@ SalonSchema.virtual("Appointment", {
   localField: "_id",
   foreignField: "AppointmentId",
   ref: "Appointment",
-});
+}); 
 
 
 

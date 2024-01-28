@@ -1,6 +1,7 @@
 import AppointmentModel from "../../../DB/Model/Appointment.Model.js";
 import SalonModel from "../../../DB/Model/Salon.Model.js";
 import UserModel from "../../../DB/Model/User.Model.js";
+import mongoose from "mongoose";
 
 
 export const createAppointment = async (req, res) => {
@@ -22,7 +23,7 @@ export const getAllAppointments = async (req, res) => {
     const appointments = await AppointmentModel.find({SalonId: salonId});
     res.status(200).json(appointments);
   } catch (error) {
-    res.status(500).json({ error: error.message }); 
+    res.status(500).json({ error: error.message });  
   }
 };
 
@@ -83,5 +84,19 @@ export const deleteAppointment = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const getUserAppointment = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    const appointments = await AppointmentModel.find({user_id: userId});  
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });   
   }
 };

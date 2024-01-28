@@ -3,7 +3,8 @@ import mongoose, { Schema, model,Types } from "mongoose";
 const AppointmentSchema = new Schema(
   {
     user_id: {
-      type: String,
+      type: Types.ObjectId,
+      ref: 'Salon',
       required: true,
     },
 

@@ -13,7 +13,7 @@ const UserSchema = new Schema({
         unique: true
     },
     age: {
-        type: Number,
+        type: Number, 
         required: true,
     },
     phone : {
@@ -53,7 +53,13 @@ const UserSchema = new Schema({
 },
 { 
     timestamps : true 
-})
+});
+
+UserSchema.virtual("Appointment", {
+    localField: "_id",
+    foreignField: "AppointmentId",
+    ref: "Appointment",
+  });
 
 
 

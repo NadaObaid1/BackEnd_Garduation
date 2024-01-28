@@ -3,7 +3,7 @@ import productModel from '../../../DB/Model/Product.model.js';
 
 export const CreateCart = async (req, res) => {
   try {
-      const { productId, quantity } = req.body;
+      const { productId, quantity } = req.body; 
       const cart = await cartModel.findOne({ userId: req.user._id }).populate({
           path: 'products.productId',
           select: 'name image finalPrice stock',
@@ -61,7 +61,7 @@ export const clearCart = async(req, res)=>{
 }
 
 
-export const getCart = async (req, res) => {
+export const getCart = async (req, res) => {  
     try {
         const cart = await cartModel.findOne({ userId: req.user._id }).populate('products.productId', 'name image finalPrice stock');
 

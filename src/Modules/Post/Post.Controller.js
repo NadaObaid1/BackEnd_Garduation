@@ -14,7 +14,7 @@ export const createPost = async (req, res) => {
       
       const newPost = await PostModel.create({...req.body, image: {secure_url, public_id}})
       
-      res.status(201).json(newPost);
+      res.status(201).json(newPost); 
       
     } catch (error) {
       console.log(error);
@@ -126,7 +126,7 @@ export { increaseLikes };
 
 export const increaseLikesController = async (req, res) => {
   const postId = req.params.id; 
-  const userId = req.params.Id;
+  const userId = req.params.Id;  
   try {
       const updatedLikes = await increaseLikes(postId, userId); 
       res.json({ likes: updatedLikes });

@@ -16,7 +16,7 @@ const PostSchema = new Schema({
         
     },
     
-    likes:  [{type: Types.ObjectId, ref: "User"}],
+    likes:  [{type: Types.ObjectId, ref: "User"}], 
 
     SalonId:{type: Types.ObjectId, ref: 'Post', required: true},
     createdBy:{type: Types.ObjectId, ref: 'User'},

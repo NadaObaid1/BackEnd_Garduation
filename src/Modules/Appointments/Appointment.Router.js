@@ -10,6 +10,7 @@ router.post('/appointment',appointmentController.createAppointment);
 router.get('/appointment', appointmentController.getAllAppointments);
 router.get('/appointment/:id/info', appointmentController.getUserById);
 router.get('/appointment/:id', appointmentController.getAppointmentById);
+router.get('/userAppointment', appointmentController.getUserAppointment); 
 router.put('/appointment/:id', appointmentController.updateAppointment);
 router.delete('/appointment/:id', appointmentController.deleteAppointment);
 
