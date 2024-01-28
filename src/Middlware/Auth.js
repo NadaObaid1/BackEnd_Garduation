@@ -20,7 +20,7 @@ export const auth = (accessRole = []) => {
       return res.status(400).json({ message: "Invalid authorization" });
     }
 
-    const user = await userModel.findById(decoded.id).select("userName role");
+    let user = await userModel.findById(decoded.id).select("userName role");
     if (!user) {
       user = await ManagerModel.findById(decoded.id).select("userName role");
       if (!user) {

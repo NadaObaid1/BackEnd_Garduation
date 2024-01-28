@@ -88,10 +88,12 @@ export const SignIn = async (req, res, next) => {
   const { email, password } = req.body;
 
   let user = await ManagerModel.findOne({ email });
-  console.log(user)
+  console.log("manager",user)
 
   if (!user) {
     user = await UserModel.findOne({ email });
+    console.log("user",user)
+
   }
 
 
@@ -129,6 +131,7 @@ export const SignIn = async (req, res, next) => {
     token,
     refreshToken,
     id: user._id,
+    salonId:user.salonId,
     role: user.role,
     name: user.userName,
     email: user.email,
