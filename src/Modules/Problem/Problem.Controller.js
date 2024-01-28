@@ -12,7 +12,7 @@ export const createProblem = async (req, res) => {
 
 export const getUserProblem = async (req, res) => {
   try {
-    const user = await ProblemModel.findOne({ user_id: req.params });
+    const user = await ProblemModel.findOne({ user_id: req.params.id });
 
     if (user) {
       const problem = user.problem;
