@@ -1,59 +1,60 @@
-import mongoose, { Schema, Types, model } from "mongoose";
+import mongoose, {Schema, model} from "mongoose";
 
-const ManagerSchema = new Schema(
-  {
-    userName: {
-      type: String,
-      min: 4,
-      max: 20,
-      required: true,
+const ManagerSchema = new Schema({
+    userName:{
+        type: String,
+        min: 4,
+        max: 20,
+        required: true
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
+     email : {
+        type: String,
+        required: true,
+        unique: true
     },
-    salonId: {
-      type: Types.ObjectId,
-      required: true,
+    salonId : {
+        type: String,
+        required: true,
     },
     age: {
-      type: Number,
-      required: true,
+        type: Number,
+        required: true,
     },
-    phone: {
-      type: String,
-      required: true,
+    phone : {
+        type: String,
+        required: true,
     },
-    address: {
-      type: String,
-      required: true,
+    address : {
+        type: String,
+        required: true,
     },
-    password: {
-      type: String,
-      required: true,
+    password : {
+        type: String,
+        required: true
     },
-    confirmEmail: {
-      type: Boolean,
-      default: false,
+    confirmEmail:{
+        type: Boolean,
+        default: false
     },
     role: {
-      type: String,
-      default: "Manager",
+        type : String,
+        default: 'Manager',
     },
-    sendCode: {
-      type: String,
-      default: null,
+    sendCode:{
+        type: String,
+        default: null
     },
     loginAttempts: {
-      type: Number,
-      default: 0,
+        type: Number,
+        default: 0 
     },
-  },
-  {
-    timestamps: true,
-  }
-);
 
-const ManagerModel = mongoose.model.Manager || model("Manager", ManagerSchema);
-export default ManagerModel;
+},
+{ 
+    timestamps : true 
+})
+
+
+
+const ManagerModel = mongoose.model.Manager || model('Manager', ManagerSchema)
+export default ManagerModel
