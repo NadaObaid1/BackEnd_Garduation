@@ -9,6 +9,9 @@ export const CreateCart = async (req, res) => {
           select: 'name image finalPrice stock',
       });
       const product = await productModel.findById(productId);
+      if (product.stock <= 0) {
+        return res.status(400).json({ message: "Product out of stock" });
+      }  
 
       if (!cart) {
           const newCart = await cartModel.create({
