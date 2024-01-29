@@ -41,22 +41,50 @@ export const CreateCart = async (req, res) => {
 
 
 
-export const removeItem = async(req, res)=>{
-    const {productId} = req.body;
+export const removeItem = async (req, res) => {
+  try {
+    const { productId } = req.body;
+    const cart = await cartModel.findOne({ userId: req.user._id });
     const product = await productModel.findById(productId);
-      product.stock += 1;
-      product.quantity -=1;
-    
-    await cartModel.updateOne({userId:req.user._id},{
-    $pull: {
-        products : {
-            productId
-        }
+
+    if (!cart) {
+      return res.status(400).json({ message: "Cart not found" });
     }
-})
-await product.save();
-return res.status(200).json({message:"success"});
-}
+
+    if (!product) {
+      return res.status(400).json({ message: "Product not found" });
+    }
+    const productInCart = cart.products.find((p) =>
+      p.productId.equals(productId)
+    );
+
+    if (!productInCart) {
+      return res.status(400).json({ message: "Product not found in cart" });
+    }
+
+    const quantityToRemove = productInCart.quantity;
+    product.stock += quantityToRemove;
+    product.quantity -= quantityToRemove;
+
+    await cartModel.updateOne(
+      { userId: req.user._id },
+      {
+        $pull: {
+          products: {
+            productId,
+          },
+        },
+      }
+    );
+    await Promise.all([cart.save(), product.save()]);
+
+    return res.status(200).json({ message: "success" });
+  } catch (error) {
+    console.error("Error removing item from cart:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 export const clearCart = async(req, res)=>{
     const clearCart = await cartModel.updateOne({userId:req.user._id},
