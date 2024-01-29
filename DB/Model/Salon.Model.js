@@ -15,6 +15,16 @@ const SalonSchema = new Schema(
     image: {
       type: Object,
     },
+    openTimes: {
+      startTime: {
+        type: Number, 
+        required: true,
+      },
+      endTime: {
+        type: Number, 
+        required: true,
+      },
+    },
   },
   {
     timestamps: true,
