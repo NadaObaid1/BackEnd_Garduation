@@ -21,24 +21,16 @@ export const CreateCart = async (req, res) => {
           await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1});
           return res.status(201).json({ message: "success", cart: newCart });
       }
-
-      let matchedProduct = false;
-
-      for (let i = 0; i < cart.products.length; i++) {
-          if (cart.products[i].productId._id.equals(productId)) {
-              cart.products[i].quantity = quantity;
-              matchedProduct = true;
-              break;
-          }}
-          if(!matchedProduct) {
-            await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1});
-            cart.products.push({productId,quantity});
-        }
+      const isProductInCarts = cart.products.some((product) => product.productId.equals(productId));
+      if (!isProductInCarts) {
+        cart.products.push({ productId });
+        await productModel.findByIdAndUpdate(productId);
+  
       await cart.save();
       console.log("Cart updated:", cart);
 
       return res.status(201).json({ message: "success", cart });
-  } catch (error) {
+  }} catch (error) {
       console.error('Error adding product to cart:', error);
       return res.status(500).json({ message: 'Internal server error' });
   }
