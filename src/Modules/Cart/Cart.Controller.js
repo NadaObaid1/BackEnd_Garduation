@@ -3,50 +3,41 @@ import productModel from '../../../DB/Model/Product.model.js';
 
 export const CreateCart = async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
-    const cart = await cartModel.findOne({ userId: req.user._id }).populate({
-      path: 'products.productId',
-      select: 'name image finalPrice stock',
-    });
-    const product = await productModel.findById(productId);
+      const { productId, quantity } = req.body; 
+      const cart = await cartModel.findOne({ userId: req.user._id }).populate({
+          path: 'products.productId',
+          select: 'name image finalPrice stock',
+      });
+      const product = await productModel.findById(productId);
 
-    if (!cart) {
-      if (product.stock > 0) {
-        const newCart = await cartModel.create({
-          userId: req.user._id,
-          products: [{ productId, quantity }]
-        });
-        await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
-        return res.status(201).json({ message: "success", cart: newCart });
-      } else {
-        return res.status(400).json({ message: "Product out of stock" });
+      if (!cart) {
+          const newCart = await cartModel.create({
+              userId: req.user._id,
+              products: [{ productId, quantity }]
+          });
+          await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1});
+          return res.status(201).json({ message: "success", cart: newCart });
       }
-    }
 
-    let matchedProduct = false;
+      let matchedProduct = false;
 
-    for (let i = 0; i < cart.products.length; i++) {
-      if (cart.products[i].productId._id.equals(productId)) {
-        cart.products[i].quantity = quantity;
-        matchedProduct = true;
-        break;
-      }
-    }
+      for (let i = 0; i < cart.products.length; i++) {
+          if (cart.products[i].productId._id.equals(productId)) {
+              cart.products[i].quantity = quantity;
+              matchedProduct = true;
+              break;
+          }}
+          if(!matchedProduct) {
+            await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1});
+            cart.products.push({productId,quantity});
+        }
+      await cart.save();
+      console.log("Cart updated:", cart);
 
-    if (!matchedProduct && product.stock > 0) {
-      await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
-      cart.products.push({ productId, quantity });
-    } else if (!matchedProduct) {
-      return res.status(400).json({ message: "Product out of stock" });
-    }
-
-    await cart.save();
-    console.log("Cart updated:", cart);
-
-    return res.status(201).json({ message: "success", cart });
+      return res.status(201).json({ message: "success", cart });
   } catch (error) {
-    console.error('Error adding product to cart:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+      console.error('Error adding product to cart:', error);
+      return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
