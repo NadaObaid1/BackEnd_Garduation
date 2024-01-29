@@ -9,9 +9,12 @@ export const CreateCart = async (req, res) => {
       select: 'name image finalPrice stock',
     });
     const product = await productModel.findById(productId);
+    
+    if (product.stock <= 0) {
+      return res.status(400).json({ message: "Product out of stock" });
+    }  
 
     if (!cart) {
-      // If cart doesn't exist, create a new cart
       const newCart = await cartModel.create({
         userId: req.user._id,
         products: [{ productId, quantity }],
@@ -19,15 +22,11 @@ export const CreateCart = async (req, res) => {
       await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
       return res.status(201).json({ message: "success", cart: newCart });
     }
-
-    // Check if the product is already in the cart
     const isProductInCart = cart.products.some((product) => product.productId.equals(productId));
     if (isProductInCart) {
-      // If the product is already in the cart, return the current cart
       return res.status(200).json({ message: "Product already in the cart", cart });
     }
 
-    // If the product is not in the cart, add it
     cart.products.push({ productId });
     await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
     await cart.save();
