@@ -32,6 +32,7 @@ export const getBodyServices = async(req, res) => {
 
 
 export const getFaceServices = async(req, res) => {
+    const salonId = req.params.id;
     const salon = await SalonModel.findById(salonId);
     try {
     if (!salon) {
