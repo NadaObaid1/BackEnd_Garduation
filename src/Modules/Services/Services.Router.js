@@ -3,7 +3,7 @@ import * as ServicesController from './Services.Controller.js'
 import fileUpload, {fileValidation} from "../../Services/multer.js"
 //import { endPoint } from './Services.endPoint.js';
 
-const router = Router()
+const router = Router({mergeParams: true}); 
 
 router.get("/getServices", ServicesController.getServices);
 router.get("/getBodyServices", ServicesController.getBodyServices);

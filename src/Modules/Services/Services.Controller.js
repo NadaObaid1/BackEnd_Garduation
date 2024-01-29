@@ -1,4 +1,5 @@
 import ServicesModel from "../../../DB/Model/Services.Model.js"; 
+import SalonModel from '../../../DB/Model/Salon.Model.js'
 import cloudinary from '../../Services/Cloudinary.js'
 
 export const getServices = async(req, res) => {
