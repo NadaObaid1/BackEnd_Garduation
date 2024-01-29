@@ -2,35 +2,66 @@ import ServicesModel from "../../../DB/Model/Services.Model.js";
 import cloudinary from '../../Services/Cloudinary.js'
 
 export const getServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false, status: 'Active',})
-    //const Services = await ServicesModel.find({isDeleted:false})
+    const salonId = req.params.id;
+    const salon = await SalonModel.findById(salonId);
+    try {
+    if (!salon) {
+        return res.status(404).json({ message: "Salon not found" });
+    }
+    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', SalonId: salonId})
     res.status(200).json({message:"success", Services})
-}
+} catch (error) {
+    console.error("Error fetching body products:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+}}
+
 export const getBodyServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Body'})
+    const salonId = req.params.id;
+    const salon = await SalonModel.findById(salonId);
+    try {
+    if (!salon) {
+        return res.status(404).json({ message: "Salon not found" });
+    }
+    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Body', SalonId: salonId})
     res.status(200).json({message:"success", Services})
-}
+} catch (error) {
+    console.error("Error fetching body products:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+}}
 
 
 export const getFaceServices = async(req, res) => {
-    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Face'})
+    const salon = await SalonModel.findById(salonId);
+    try {
+    if (!salon) {
+         return res.status(404).json({ message: "Salon not found" });
+    }
+    const salonId = req.params.id;
+    const Services = await ServicesModel.find({isDeleted:false, status: 'Active', subServices: 'Face', SalonId: salonId})
     res.status(200).json({message:"success", Services})
-}
+} catch (error) {
+    console.error("Error fetching body products:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+}}
 
 export const CreateServices = async(req, res) => {
-    const {name, description, price, discount, time} = req.body;
+    const {SalonId, name, description, price, discount, time} = req.body;
     let { subServices } = req.body;
     let { status } = req.body;
 
     if(await ServicesModel.findOne({name})){
         return res.status(409).json("Services Name is Exists")
     }
+    const salon = await SalonModel.findById(SalonId);
+    if (!salon) {
+        return res.status(404).json({ message: "Salon not found" });
+    }
     req.body.finalPrice = price - (price * (discount || 0) / 100);
 
     const {secure_url, public_id} = await cloudinary.uploader.upload(req.file.path, {
         folder : `${process.env.APP_NAME}/services`
     })
-    const service = await ServicesModel.create({name, description, price, discount, finalPrice: req.body.finalPrice, 
+    const service = await ServicesModel.create({SalonId, name, description, price, discount, finalPrice: req.body.finalPrice, 
         subServices, status, time, image: {secure_url, public_id}})
     return res.status(201).json({message: "success", service})
 
