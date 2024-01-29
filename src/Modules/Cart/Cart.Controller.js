@@ -3,38 +3,43 @@ import productModel from '../../../DB/Model/Product.model.js';
 
 export const CreateCart = async (req, res) => {
   try {
-      const { productId, quantity } = req.body; 
-      const cart = await cartModel.findOne({ userId: req.user._id }).populate({
-          path: 'products.productId',
-          select: 'name image finalPrice stock',
+    const { productId, quantity } = req.body;
+    const cart = await cartModel.findOne({ userId: req.user._id }).populate({
+      path: 'products.productId',
+      select: 'name image finalPrice stock',
+    });
+    const product = await productModel.findById(productId);
+
+    if (!cart) {
+      // If cart doesn't exist, create a new cart
+      const newCart = await cartModel.create({
+        userId: req.user._id,
+        products: [{ productId, quantity }],
       });
-      const product = await productModel.findById(productId);
-      if (product.stock <= 0) {
-        return res.status(400).json({ message: "Product out of stock" });
-      }  
+      await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
+      return res.status(201).json({ message: "success", cart: newCart });
+    }
 
-      if (!cart) {
-          const newCart = await cartModel.create({
-              userId: req.user._id,
-              products: [{ productId, quantity }]
-          });
-          await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1});
-          return res.status(201).json({ message: "success", cart: newCart });
-      }
-      const isProductInCarts = cart.products.some((product) => product.productId.equals(productId));
-      if (!isProductInCarts) {
-        cart.products.push({ productId });
-        await productModel.findByIdAndUpdate(productId);
-  
-      await cart.save();
-      console.log("Cart updated:", cart);
+    // Check if the product is already in the cart
+    const isProductInCart = cart.products.some((product) => product.productId.equals(productId));
+    if (isProductInCart) {
+      // If the product is already in the cart, return the current cart
+      return res.status(200).json({ message: "Product already in the cart", cart });
+    }
 
-      return res.status(201).json({ message: "success", cart });
-  }} catch (error) {
-      console.error('Error adding product to cart:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    // If the product is not in the cart, add it
+    cart.products.push({ productId });
+    await productModel.findByIdAndUpdate(productId, { stock: product.stock - 1 });
+    await cart.save();
+    console.log("Cart updated:", cart);
+
+    return res.status(201).json({ message: "success", cart });
+  } catch (error) {
+    console.error('Error adding product to cart:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 
 export const removeItem = async(req, res)=>{
