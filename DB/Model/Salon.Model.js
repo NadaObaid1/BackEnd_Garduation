@@ -40,6 +40,12 @@ SalonSchema.virtual("Product", {
   ref: "Product", //جبتها من اسم المودل الي موجودة بال Product model
 });
 
+SalonSchema.virtual("Services", {
+  localField: "_id", 
+  foreignField: "ServiceId", 
+  ref: "Services", 
+});
+
 SalonSchema.virtual("Post", {
   localField: "_id",
   foreignField: "PostId",

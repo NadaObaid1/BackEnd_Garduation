@@ -45,7 +45,8 @@ const ServicesSchema = new Schema({
     isDeleted: {
         type: Boolean,
         default: false
-    }
+    },
+    SalonId:{type: Types.ObjectId, ref: 'Salon', required: true}
     },
     {
         timestamps: true
