@@ -43,6 +43,10 @@ export const CreateCart = async (req, res) => {
 
 export const removeItem = async(req, res)=>{
     const {productId} = req.body;
+    const product = await productModel.findById(productId);
+      product.stock -= 1;
+      product.quantity +=1;
+    
     await cartModel.updateOne({userId:req.user._id},{
     $pull: {
         products : {
@@ -50,6 +54,7 @@ export const removeItem = async(req, res)=>{
         }
     }
 })
+await product.save();
 return res.status(200).json({message:"success"});
 }
 
