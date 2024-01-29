@@ -1,4 +1,4 @@
-import mongoose, {Schema, model} from "mongoose";
+import mongoose, {Schema, Types, model} from "mongoose";
 
 const ManagerSchema = new Schema({
     userName:{
@@ -13,7 +13,7 @@ const ManagerSchema = new Schema({
         unique: true
     },
     salonId : {
-        type: String,
+        type: Types.ObjectId,
         required: true,
     },
     age: {
