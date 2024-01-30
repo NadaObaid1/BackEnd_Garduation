@@ -4,8 +4,15 @@ import UserModel from "../../../DB/Model/User.Model.js";
 
 export const createNotification = async (req, res) => {
   try {
-    const { expoPushToken, title, body, data } = req.body;
-    const newNotification = await NotificationModel.create({ expoPushToken, title, body, data });
+    const { expoPushToken, title, body, data, salonId, userId } = req.body;
+    const newNotification = await NotificationModel.create({
+      expoPushToken,
+      title,
+      body,
+      data,
+      salonId,
+      userId,
+    });
     res.status(201).json(newNotification);
   } catch (error) {
     res.status(500).json({ error });
@@ -26,11 +33,11 @@ export const getUserNotifications = async (req, res) => {
   try {
     const user = await UserModel.findById(userId);
     if (!user) {
-        return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
-    const notifications = await NotificationModel.find({user_id: userId});  
+    const notifications = await NotificationModel.find({ user_id: userId });
     res.status(200).json(notifications);
   } catch (error) {
-    res.status(500).json({ error: error.message });   
+    res.status(500).json({ error: error.message });
   }
 };
