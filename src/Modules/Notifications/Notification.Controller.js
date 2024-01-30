@@ -5,12 +5,7 @@ import UserModel from "../../../DB/Model/User.Model.js";
 export const createNotification = async (req, res) => {
   try {
     const { expoPushToken, title, body, data } = req.body;
-    const newNotification = await NotificationModel.create({
-      expoPushToken,
-      title,
-      body,
-      data,
-    });
+    const newNotification = await NotificationModel.create({ expoPushToken, title, body, data });
     res.status(201).json(newNotification);
   } catch (error) {
     res.status(500).json({ error });
