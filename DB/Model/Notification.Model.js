@@ -18,6 +18,14 @@ const NotificationSchema = new Schema(
       type: Object,
       default: {},
     },
+    salonId: {
+      type: Types.ObjectId,
+      required: true,
+    },
+    userId: {
+      type: Types.ObjectId,
+      required: true,
+    },
   },
   {
     timestamps: true,
