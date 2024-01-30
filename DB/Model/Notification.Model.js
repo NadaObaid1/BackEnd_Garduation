@@ -19,11 +19,11 @@ const NotificationSchema = new Schema(
       default: {},
     },
     salonId: {
-      type: String,
+      type: Types.ObjectId,
       required: true,
     },
     userId: {
-      type: String,
+      type: Types.ObjectId,
       required: true,
     },
   },
