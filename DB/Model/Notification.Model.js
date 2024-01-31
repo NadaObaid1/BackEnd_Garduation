@@ -26,6 +26,7 @@ const NotificationSchema = new Schema(
       type: Types.ObjectId,
       required: true,
     },
+    salonId:{type: Types.ObjectId, ref: 'Salon', required: true},
   },
   {
     timestamps: true,

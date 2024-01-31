@@ -7,6 +7,8 @@ router.post("/notification", notificationController.createNotification);
 router.get("/notifications", notificationController.getAllNotifications);
 router.get('/userNotification', notificationController.getUserNotifications); 
 router.delete('/notification/:id', notificationController.deleteNotification);
+router.get("/managerNotification", notificationController.getSalonNotifications);
+
 
 
 export default router;
