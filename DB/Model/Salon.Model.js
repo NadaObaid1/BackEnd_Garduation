@@ -5,7 +5,7 @@ const SalonSchema = new Schema(
     name: {
       type: String,
       minlength: 4,
-      maxlength: 20,
+      maxlength: 50,
       required: true,
     },
     branches: {
