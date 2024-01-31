@@ -26,7 +26,10 @@ const NotificationSchema = new Schema(
       type: Types.ObjectId,
       required: true,
     },
-    
+    toUser: {
+      type: Boolean,
+      default: true,
+    }
   },
   {
     timestamps: true,

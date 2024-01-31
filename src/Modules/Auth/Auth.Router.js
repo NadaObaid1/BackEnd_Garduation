@@ -11,7 +11,7 @@ import NotificationRouter from "../Notifications/Notification.Router.js"
 const router = Router()
 
 router.use("/:id/Appointment", AppointmentRouter)
-router.use("/:id/Notification", NotificationRouter)
+router.use("/:id/:Id/Notification", NotificationRouter)
 
 router.post("/signup", validation(SignUpSchema), asynHandler(controllerAuth.SignUp));
 router.post("/signin", validation(SignInSchema), asynHandler(controllerAuth.SignIn));
