@@ -4,7 +4,7 @@ import UserModel from "../../../DB/Model/User.Model.js";
 
 export const createNotification = async (req, res) => {
   try {
-    const { expoPushToken, title, body, data, salonId, userId } = req.body;
+    const { expoPushToken, title, body, data, salonId, userId, toUser } = req.body;
     const newNotification = await NotificationModel.create({
       expoPushToken,
       title,
