@@ -7,6 +7,7 @@ import JobRouter from "../Job/Job.Router.js"
 import UploadjobRouter from "../Uploadjob/Uploadjob.Router.js"
 import EmployeeRouter from "../Employees/Employee.Router.js"
 import AppointmentRouter from "../Appointments/Appointment.Router.js"
+import NotificationRouter from "../Notifications/Notification.Router.js"
 
 
 import {auth, roles} from "../../Middlware/Auth.js"
@@ -23,6 +24,8 @@ router.use("/:id/Job", JobRouter)
 router.use("/:id/Uploadjob", UploadjobRouter)
 router.use("/:id/Employee", EmployeeRouter)
 router.use("/:id/Appointment", AppointmentRouter)
+router.use("/:id/Notification", NotificationRouter) 
+
 
 router.post('/salon',fileUpload(fileValidation.image).single('image'), salonController.createSalon);
 router.get('/salon', auth([roles.Admin, roles.User]) ,salonController.getAllSalons);

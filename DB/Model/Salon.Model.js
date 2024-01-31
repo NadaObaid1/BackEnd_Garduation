@@ -76,6 +76,12 @@ SalonSchema.virtual("Appointment", {
   ref: "Appointment",
 }); 
 
+SalonSchema.virtual("Notification", {
+  localField: "_id",
+  foreignField: "NotificationId",
+  ref: "Notification",
+});
+
 
 
 

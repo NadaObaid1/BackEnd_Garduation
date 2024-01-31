@@ -41,3 +41,32 @@ export const getUserNotifications = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const deleteNotification = async (req, res) => {
+  try {
+    const deletedNotif = await NotificationModel.findByIdAndDelete( 
+      req.params.id
+    );
+    if (deletedNotif) {
+      res.status(200).json(deletedNotif);
+    } else {
+      res.status(404).json({ message: 'Notification not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message }); 
+  }
+};
+
+export const getSalonNotifications = async (req, res) => { 
+  const salonId = req.params.id;
+  try {
+    const salon = await SalonModel.findById(salonId);
+    if (!salon) {
+      return res.status(404).json({ message: "Salon not found" }); 
+    }
+    const notifications = await NotificationModel.find({ salonId: salonId });
+    res.status(200).json(notifications);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
