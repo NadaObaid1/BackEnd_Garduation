@@ -5,6 +5,6 @@ const router = Router({ mergeParams: true });
 
 router.post("/notification", notificationController.createNotification);
 router.get("/notifications", notificationController.getAllNotifications);
-router.get('/notifications/:id', notificationController.getUserNotifications); 
+router.get('/userNotification', notificationController.getUserNotifications); 
 
 export default router;

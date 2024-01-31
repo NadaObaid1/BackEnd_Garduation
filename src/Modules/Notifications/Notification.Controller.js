@@ -28,12 +28,12 @@ export const getAllNotifications = async (req, res) => {
   }
 };
 
-export const getUserNotifications = async (req, res) => {
+export const getUserNotifications = async (req, res) => { 
   const userId = req.params.id;
   try {
     const user = await UserModel.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" }); 
     }
     const notifications = await NotificationModel.find({ userId: userId });
     res.status(200).json(notifications);
