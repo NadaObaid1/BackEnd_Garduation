@@ -12,6 +12,7 @@ export const createNotification = async (req, res) => {
       data,
       salonId,
       userId,
+      toUser,
     });
     res.status(201).json(newNotification);
   } catch (error) {
