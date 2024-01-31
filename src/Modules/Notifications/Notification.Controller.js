@@ -37,7 +37,7 @@ export const getUserNotifications = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" }); 
     }
-    const notifications = await NotificationModel.find({salonId: salonId, userId: userId,  toUser: true });
+    const notifications = await NotificationModel.find({salonId: salonId, userId: userId,  toUser: false });
     res.status(200).json(notifications);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -66,7 +66,7 @@ export const getSalonNotifications = async (req, res) => {
     if (!salon) {
       return res.status(404).json({ message: "Salon not found" }); 
     }
-    const notifications = await NotificationModel.find({ salonId: salonId, toUser: false });
+    const notifications = await NotificationModel.find({ salonId: salonId, toUser: true });
     res.status(200).json(notifications);
   } catch (error) {
     res.status(500).json({ error: error.message });
