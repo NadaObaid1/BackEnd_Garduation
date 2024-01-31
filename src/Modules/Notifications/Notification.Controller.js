@@ -36,7 +36,7 @@ export const getUserNotifications = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" }); 
     }
-    const notifications = await NotificationModel.find({ userId: userId, salonId: salonId, toUser: true });
+    const notifications = await NotificationModel.find({salonId: salonId, userId: userId,  toUser: true });
     res.status(200).json(notifications);
   } catch (error) {
     res.status(500).json({ error: error.message });
