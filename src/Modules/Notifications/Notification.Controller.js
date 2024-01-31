@@ -41,3 +41,18 @@ export const getUserNotifications = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export const deleteNotification = async (req, res) => {
+  try {
+    const deletedNotif = await NotificationModel.findByIdAndDelete( 
+      req.params.id
+    );
+    if (deletedNotif) {
+      res.status(200).json(deletedNotif);
+    } else {
+      res.status(404).json({ message: 'Notification not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message }); 
+  }
+};
