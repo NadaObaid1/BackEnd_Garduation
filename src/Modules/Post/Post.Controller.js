@@ -91,7 +91,7 @@ export const getAllPosts = async (req, res) => {
   }; 
 
 
-  // increaseLikes.js
+  
 
   const increaseLikes = async (postId, userId) => {
     try {
@@ -114,7 +114,7 @@ export const getAllPosts = async (req, res) => {
             throw new Error('Post not found');
         }
 
-        return post.likes.length;
+        return post.likes;
     } catch (error) {
       console.log(error.message)
         throw new Error('Failed to increase likes');
