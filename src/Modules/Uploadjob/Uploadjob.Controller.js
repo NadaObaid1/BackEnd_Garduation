@@ -1,5 +1,6 @@
-import UploadjobModel from "../../../DB/Model/Uploadjob.Model.js";
 import SalonModel from "../../../DB/Model/Salon.Model.js";
+
+import UploadjobModel from "../../../DB/Model/Uploadjob.Model.js";
 import multer from "multer";
 
 const storage = multer.memoryStorage();
