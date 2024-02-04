@@ -162,7 +162,7 @@ export const ConfirmEmail = async (req, res) => {
 export const SendCode = async (req, res) => {
   const { email } = req.body;
   let code = customAlphabet("1234567890", 4);
-  code = code();
+  code = code(); // الهدف هو تعيين قيمة محددة للمتغير
   const User = await UserModel.findOneAndUpdate(
     { email },
     { sendCode: code },
