@@ -5,7 +5,7 @@ const AppointmentSchema = new Schema(
     user_id: {
       type: Types.ObjectId,
       ref: 'Salon',
-      required: true,
+      required: true, 
     },
 
     user_name: {

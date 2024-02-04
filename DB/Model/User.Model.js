@@ -61,6 +61,11 @@ UserSchema.virtual("Appointment", {
     ref: "Appointment",
   });
 
+  UserSchema.virtual("Notification", {
+    localField: "_id",
+    foreignField: "NotificationId",
+    ref: "Notification",
+  });
 
 
 const UserModel = mongoose.model.User || model('User', UserSchema)

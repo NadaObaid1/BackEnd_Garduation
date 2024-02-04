@@ -5,10 +5,13 @@ import validation from '../../Services/Validation.js'
 import {SignInSchema} from './Auth.Vaildation.js'
 import {SignUpSchema} from './Auth.Vaildation.js'
 import AppointmentRouter from "../Appointments/Appointment.Router.js"
+import NotificationRouter from "../Notifications/Notification.Router.js"
+
 
 const router = Router()
 
 router.use("/:id/Appointment", AppointmentRouter)
+router.use("/:Id/:id/Notification", NotificationRouter)
 
 router.post("/signup", validation(SignUpSchema), asynHandler(controllerAuth.SignUp));
 router.post("/signin", validation(SignInSchema), asynHandler(controllerAuth.SignIn));

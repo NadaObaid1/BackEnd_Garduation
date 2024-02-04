@@ -1,24 +1,39 @@
-import UploadjobModel from "../../../DB/Model/Uploadjob.Model.js"
 import SalonModel from "../../../DB/Model/Salon.Model.js";
-import cloudinary from '../../Services/Cloudinary.js'
 
-export const uploadJob = async (req, res) => { 
-    try {
-      const {secure_url, public_id} = await cloudinary.uploader.upload(req.file.path, {
-          folder : `${process.env.APP_NAME}/uploadjobs`
-      })
-      
-      const newJob = await UploadjobModel.create({...req.body, cvFile: {secure_url, public_id}})
-      
-      res.status(201).json(newJob);
-      
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error});
-     
-  
-    } 
-  };
+import UploadjobModel from "../../../DB/Model/Uploadjob.Model.js";
+import multer from "multer";
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+export const createJob = async (req, res) => {
+  try {
+    upload.single("cvFile")(req, res, async (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Error uploading file" });
+      }
+
+      const { user_name, jobName, SalonId } = req.body;
+      const cvFileBuffer = req.file.buffer;
+
+      const newJob = new UploadjobModel({
+        user_name,
+        jobName,
+        cvFile: cvFileBuffer,
+        SalonId,
+      });
+
+      const savedJob = await newJob.save();
+      return res.status(201).json(savedJob);
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
 
  
   export const getAllJobs = async (req, res) => {
